@@ -7,30 +7,48 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col transition-colors duration-200">
     <!-- Navigation -->
-    <nav class="bg-white dark:bg-gray-800 shadow-md">
+    <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
                     <a href="index.html" class="text-2xl font-bold text-red-800 dark:text-red-500">BidMaster</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Home</a>
-                    <a href="category.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Categories</a>
-                    <a href="notifications.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Notifications</a>
-                    <a href="sell-item.html" class="px-4 py-2 rounded-md text-sm font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200">Sell an Item</a>
+                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border-b-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Home</a>
+                    <a href="category.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border-b-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Categories</a>
+                    <a href="notifications.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border-b-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Notifications</a>
+                    <a href="sell-item.html" class="px-4 py-2 rounded-md text-sm font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200 transform hover:scale-105">Sell an Item</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none">
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none transform hover:scale-110 transition-transform duration-200">
                         <i data-feather="moon" class="dark:hidden"></i>
                         <i data-feather="sun" class="hidden dark:block"></i>
                     </button>
+                    
+                    <!-- Login/Register Buttons -->
+                    <div class="hidden md:flex items-center space-x-2">
+                        <a href="login.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border border-gray-300 dark:border-gray-600 hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Login</a>
+                        <a href="register.html" class="px-3 py-2 rounded-md text-sm font-medium bg-gray-800 dark:bg-gray-700 text-white hover:bg-red-800 dark:hover:bg-red-700 transition-colors duration-200">Register</a>
+                    </div>
+                    
                     <div class="relative">
-                        <button class="flex items-center focus:outline-none">
-                            <img src="https://via.placeholder.com/40" alt="Profile" class="h-8 w-8 rounded-full">
+                        <button id="profile-menu-button" class="flex items-center focus:outline-none">
+                            <img src="https://via.placeholder.com/40" alt="Profile" class="h-8 w-8 rounded-full border-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">
                         </button>
+                        <!-- Profile Dropdown -->
+                        <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-10 hidden transition-all duration-200">
+                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">My Profile</a>
+                            <a href="my-bids.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">My Bids</a>
+                            <a href="my-auctions.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">My Auctions</a>
+                            <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Settings</a>
+                            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+                        </div>
                     </div>
                     <button class="md:hidden focus:outline-none" id="mobile-menu-button">
                         <i data-feather="menu"></i>
@@ -44,6 +62,9 @@
                     <a href="category.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Categories</a>
                     <a href="notifications.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Notifications</a>
                     <a href="sell-item.html" class="block px-3 py-2 rounded-md text-base font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200 mt-2">Sell an Item</a>
+                    <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                    <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Login</a>
+                    <a href="register.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Register</a>
                 </div>
             </div>
         </div>
@@ -51,118 +72,362 @@
 
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8">
-        <!-- Hero Section -->
+        <!-- Hero Slider Section -->
         <section class="mb-10">
-            <div class="bg-red-800 dark:bg-red-900 rounded-lg shadow-lg p-6 md:p-10 text-white">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4">Find and Bid on Exclusive Items</h1>
-                <p class="text-lg mb-6">Discover unique items and place your bids in real-time.</p>
-                
-                <!-- Search Bar -->
-                <div class="flex flex-col md:flex-row gap-4">
-                    <div class="flex-grow">
-                        <form action="search-results.html" method="get" class="flex">
-                            <input type="text" name="query" placeholder="Search for items..." class="w-full px-4 py-3 rounded-l-lg text-gray-800 focus:outline-none">
-                            <button type="submit" class="bg-black dark:bg-gray-800 px-6 py-3 rounded-r-lg hover:bg-gray-900 transition-colors duration-200">
-                                <i data-feather="search" class="h-5 w-5"></i>
-                            </button>
-                        </form>
+            <div class="swiper hero-swiper rounded-lg overflow-hidden shadow-lg">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-red-900/80 to-black/60 z-10"></div>
+                        <img src="https://via.placeholder.com/1200x400" alt="Auction Banner" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-center px-6 md:px-12 z-20 text-white">
+                            <h1 class="text-3xl md:text-5xl font-bold mb-4 transform translate-y-4 opacity-0 transition-all duration-700 slide-title">Find and Bid on Exclusive Items</h1>
+                            <p class="text-lg mb-6 max-w-2xl transform translate-y-4 opacity-0 transition-all duration-700 delay-300 slide-description">Discover unique items and place your bids in real-time. BidMaster connects you with collectors and sellers from around the world.</p>
+                            <div class="transform translate-y-4 opacity-0 transition-all duration-700 delay-500 slide-button">
+                                <a href="category.html" class="inline-block bg-red-800 px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium transform hover:scale-105">Browse Categories</a>
+                            </div>
+                        </div>
                     </div>
-                    <a href="sell-item.html" class="bg-black dark:bg-gray-800 px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors duration-200 text-center">
-                        Sell an Item
-                    </a>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-red-900/80 z-10"></div>
+                        <img src="https://via.placeholder.com/1200x400" alt="Selling Banner" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-center px-6 md:px-12 z-20 text-white">
+                            <h1 class="text-3xl md:text-5xl font-bold mb-4 transform translate-y-4 opacity-0 transition-all duration-700 slide-title">Sell Your Valuable Items</h1>
+                            <p class="text-lg mb-6 max-w-2xl transform translate-y-4 opacity-0 transition-all duration-700 delay-300 slide-description">Turn your collectibles into cash. Reach thousands of potential buyers through our trusted auction platform.</p>
+                            <div class="transform translate-y-4 opacity-0 transition-all duration-700 delay-500 slide-button">
+                                <a href="sell-item.html" class="inline-block bg-red-800 px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium transform hover:scale-105">Start Selling</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-red-900/80 to-black/60 z-10"></div>
+                        <img src="https://via.placeholder.com/1200x400" alt="Featured Auctions" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-center px-6 md:px-12 z-20 text-white">
+                            <h1 class="text-3xl md:text-5xl font-bold mb-4 transform translate-y-4 opacity-0 transition-all duration-700 slide-title">Featured Auctions This Week</h1>
+                            <p class="text-lg mb-6 max-w-2xl transform translate-y-4 opacity-0 transition-all duration-700 delay-300 slide-description">Don't miss out on our hottest items. Rare collectibles, vintage electronics, and unique art pieces are waiting for your bids.</p>
+                            <div class="transform translate-y-4 opacity-0 transition-all duration-700 delay-500 slide-button">
+                                <a href="#featured-auctions" class="inline-block bg-red-800 px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium transform hover:scale-105">View Featured</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next text-white"></div>
+                <div class="swiper-button-prev text-white"></div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="relative -mt-8 md:-mt-16 z-20 px-4">
+                <form action="search-results.html" method="get" class="flex flex-col md:flex-row md:items-center gap-4 bg-white dark:bg-gray-800 p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+                    <div class="flex-grow">
+                        <div class="relative">
+                            <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"></i>
+                            <input type="text" name="query" placeholder="Search for items..." class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-800 dark:focus:ring-red-500">
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <select name="category" class="w-full md:w-auto px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-800 dark:focus:ring-red-500">
+                            <option value="">All Categories</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="collectibles">Collectibles</option>
+                            <option value="art">Art</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="fashion">Fashion</option>
+                            <option value="home">Home & Garden</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-red-800 px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-200 text-white font-medium transform hover:scale-105">
+                        Search
+                    </button>
+                </form>
             </div>
         </section>
 
         <!-- Categories Section -->
         <section class="mb-10">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">Categories</h2>
-                <a href="category.html" class="text-red-800 dark:text-red-500 hover:underline">View All</a>
+                <h2 class="text-2xl font-bold">Popular Categories</h2>
+                <a href="category.html" class="text-red-800 dark:text-red-500 hover:underline group flex items-center">
+                    View All
+                    <i data-feather="chevron-right" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform duration-200"></i>
+                </a>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <a href="category.html?category=electronics" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                    <div class="flex items-center justify-between">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="category.html?category=electronics" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 hover:bg-red-50 dark:hover:bg-gray-700 group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-3 rounded-full bg-red-100 dark:bg-gray-700 mb-4 group-hover:bg-red-200 dark:group-hover:bg-red-900/30 transition-colors duration-200">
+                            <i data-feather="cpu" class="h-8 w-8 text-red-800 dark:text-red-500"></i>
+                        </div>
                         <span class="text-lg font-medium">Electronics</span>
-                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(42)</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mt-1">(42 items)</span>
                     </div>
                 </a>
-                <a href="category.html?category=collectibles" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                    <div class="flex items-center justify-between">
+                <a href="category.html?category=collectibles" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 hover:bg-red-50 dark:hover:bg-gray-700 group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-3 rounded-full bg-red-100 dark:bg-gray-700 mb-4 group-hover:bg-red-200 dark:group-hover:bg-red-900/30 transition-colors duration-200">
+                            <i data-feather="award" class="h-8 w-8 text-red-800 dark:text-red-500"></i>
+                        </div>
                         <span class="text-lg font-medium">Collectibles</span>
-                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(28)</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mt-1">(28 items)</span>
                     </div>
                 </a>
-                <a href="category.html?category=art" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                    <div class="flex items-center justify-between">
+                <a href="category.html?category=art" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 hover:bg-red-50 dark:hover:bg-gray-700 group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-3 rounded-full bg-red-100 dark:bg-gray-700 mb-4 group-hover:bg-red-200 dark:group-hover:bg-red-900/30 transition-colors duration-200">
+                            <i data-feather="image" class="h-8 w-8 text-red-800 dark:text-red-500"></i>
+                        </div>
                         <span class="text-lg font-medium">Art</span>
-                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(15)</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mt-1">(15 items)</span>
                     </div>
                 </a>
-                <a href="category.html?category=jewelry" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                    <div class="flex items-center justify-between">
+                <a href="category.html?category=jewelry" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 hover:bg-red-50 dark:hover:bg-gray-700 group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-3 rounded-full bg-red-100 dark:bg-gray-700 mb-4 group-hover:bg-red-200 dark:group-hover:bg-red-900/30 transition-colors duration-200">
+                            <i data-feather="watch" class="h-8 w-8 text-red-800 dark:text-red-500"></i>
+                        </div>
                         <span class="text-lg font-medium">Jewelry</span>
-                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(23)</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mt-1">(23 items)</span>
+                    </div>
+                </a>
+                <a href="category.html?category=fashion" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 hover:bg-red-50 dark:hover:bg-gray-700 group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-3 rounded-full bg-red-100 dark:bg-gray-700 mb-4 group-hover:bg-red-200 dark:group-hover:bg-red-900/30 transition-colors duration-200">
+                            <i data-feather="shopping-bag" class="h-8 w-8 text-red-800 dark:text-red-500"></i>
+                        </div>
+                        <span class="text-lg font-medium">Fashion</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mt-1">(19 items)</span>
+                    </div>
+                </a>
+                <a href="category.html?category=home" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 hover:bg-red-50 dark:hover:bg-gray-700 group">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="p-3 rounded-full bg-red-100 dark:bg-gray-700 mb-4 group-hover:bg-red-200 dark:group-hover:bg-red-900/30 transition-colors duration-200">
+                            <i data-feather="home" class="h-8 w-8 text-red-800 dark:text-red-500"></i>
+                        </div>
+                        <span class="text-lg font-medium">Home</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mt-1">(31 items)</span>
                     </div>
                 </a>
             </div>
         </section>
 
         <!-- Featured Auctions -->
-        <section>
+        <section id="featured-auctions">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold">Featured Auctions</h2>
-                <a href="search-results.html" class="text-red-800 dark:text-red-500 hover:underline">View All</a>
+                <a href="search-results.html" class="text-red-800 dark:text-red-500 hover:underline group flex items-center">
+                    View All
+                    <i data-feather="chevron-right" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform duration-200"></i>
+                </a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Auction Item 1 -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
-                    <img src="https://via.placeholder.com/400x300" alt="Vintage Camera" class="w-full h-48 object-cover">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://via.placeholder.com/400x300" alt="Vintage Camera" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-0 right-0 bg-red-800 text-white px-3 py-1 text-sm font-bold">
+                            Hot Deal
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
+                            <span class="text-sm font-medium">Ends in: <span class="countdown-timer" data-end="2023-12-31T15:00:00">2d 14h</span></span>
+                        </div>
+                    </div>
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold mb-2">Vintage Leica Camera</h3>
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-red-800 dark:group-hover:text-red-500 transition-colors duration-200">Vintage Leica Camera</h3>
+                            <span class="bg-gray-200 dark:bg-gray-700 text-xs text-gray-800 dark:text-gray-300 px-2 py-1 rounded-full">Electronics</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">Rare Leica III model from 1936, excellent condition with original leather case and accessories.</p>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-gray-600 dark:text-gray-400">Current Bid:</span>
                             <span class="font-bold text-red-800 dark:text-red-500">$1,250</span>
                         </div>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Ends in: 2d 14h</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">15 bids</span>
+                            <span class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <i data-feather="users" class="h-4 w-4 mr-1"></i> 15 bids
+                            </span>
+                            <span class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <i data-feather="eye" class="h-4 w-4 mr-1"></i> 142 views
+                            </span>
                         </div>
-                        <a href="item-details.html?id=1" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200">Place Bid</a>
+                        <a href="item-details.html?id=1" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200 transform hover:translate-y-1">Place Bid</a>
                     </div>
                 </div>
 
                 <!-- Auction Item 2 -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
-                    <img src="https://via.placeholder.com/400x300" alt="Antique Watch" class="w-full h-48 object-cover">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://via.placeholder.com/400x300" alt="Antique Watch" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-0 right-0 bg-red-800 text-white px-3 py-1 text-sm font-bold">
+                            Ending Soon
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
+                            <span class="text-sm font-medium">Ends in: <span class="countdown-timer" data-end="2023-12-25T10:30:00">1d 8h</span></span>
+                        </div>
+                    </div>
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold mb-2">Antique Pocket Watch</h3>
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-red-800 dark:group-hover:text-red-500 transition-colors duration-200">Antique Pocket Watch</h3>
+                            <span class="bg-gray-200 dark:bg-gray-700 text-xs text-gray-800 dark:text-gray-300 px-2 py-1 rounded-full">Collectibles</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">19th century gold pocket watch with intricate engravings and original chain. Working condition.</p>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-gray-600 dark:text-gray-400">Current Bid:</span>
                             <span class="font-bold text-red-800 dark:text-red-500">$850</span>
                         </div>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Ends in: 1d 8h</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">9 bids</span>
+                            <span class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <i data-feather="users" class="h-4 w-4 mr-1"></i> 9 bids
+                            </span>
+                            <span class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <i data-feather="eye" class="h-4 w-4 mr-1"></i> 87 views
+                            </span>
                         </div>
-                        <a href="item-details.html?id=2" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200">Place Bid</a>
+                        <a href="item-details.html?id=2" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200 transform hover:translate-y-1">Place Bid</a>
                     </div>
                 </div>
 
                 <!-- Auction Item 3 -->
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
-                    <img src="https://via.placeholder.com/400x300" alt="Signed Vinyl" class="w-full h-48 object-cover">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] group">
+                    <div class="relative overflow-hidden">
+                        <img src="https://via.placeholder.com/400x300" alt="Signed Vinyl" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-0 right-0 bg-gray-800 text-white px-3 py-1 text-sm font-bold">
+                            Featured
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent text-white">
+                            <span class="text-sm font-medium">Ends in: <span class="countdown-timer" data-end="2024-01-04T22:00:00">3d 22h</span></span>
+                        </div>
+                    </div>
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold mb-2">Signed Vinyl Record</h3>
+                        <div class="flex items-start justify-between">
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-red-800 dark:group-hover:text-red-500 transition-colors duration-200">Signed Vinyl Record</h3>
+                            <span class="bg-gray-200 dark:bg-gray-700 text-xs text-gray-800 dark:text-gray-300 px-2 py-1 rounded-full">Collectibles</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">Rare limited edition vinyl signed by the entire band. Never played, mint condition.</p>
                         <div class="flex justify-between items-center mb-3">
                             <span class="text-gray-600 dark:text-gray-400">Current Bid:</span>
                             <span class="font-bold text-red-800 dark:text-red-500">$320</span>
                         </div>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Ends in: 3d 22h</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">7 bids</span>
+                            <span class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <i data-feather="users" class="h-4 w-4 mr-1"></i> 7 bids
+                            </span>
+                            <span class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                <i data-feather="eye" class="h-4 w-4 mr-1"></i> 103 views
+                            </span>
                         </div>
-                        <a href="item-details.html?id=3" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200">Place Bid</a>
+                        <a href="item-details.html?id=3" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200 transform hover:translate-y-1">Place Bid</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="my-16">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg py-10 px-6 md:px-10">
+                <h2 class="text-2xl font-bold text-center mb-10">What Our Users Say</h2>
+                <div class="swiper testimonial-swiper">
+                    <div class="swiper-wrapper pb-10">
+                        <!-- Testimonial 1 -->
+                        <div class="swiper-slide">
+                            <div class="flex flex-col items-center text-center px-6">
+                                <img src="https://via.placeholder.com/100" alt="User" class="w-20 h-20 rounded-full mb-4 border-4 border-red-100 dark:border-gray-700">
+                                <div class="flex items-center mb-3">
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">"I found a rare vintage camera that I'd been searching for years! The bidding process was exciting and the seller shipped it promptly. Highly recommend!"</p>
+                                <h4 class="font-semibold">Sarah Johnson</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-500">Photography Enthusiast</p>
+                            </div>
+                        </div>
+                        <!-- Testimonial 2 -->
+                        <div class="swiper-slide">
+                            <div class="flex flex-col items-center text-center px-6">
+                                <img src="https://via.placeholder.com/100" alt="User" class="w-20 h-20 rounded-full mb-4 border-4 border-red-100 dark:border-gray-700">
+                                <div class="flex items-center mb-3">
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">"I've sold several collectibles on BidMaster and always had a great experience. The platform is easy to use and I've reached buyers from around the world."</p>
+                                <h4 class="font-semibold">Michael Thompson</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-500">Antique Dealer</p>
+                            </div>
+                        </div>
+                        <!-- Testimonial 3 -->
+                        <div class="swiper-slide">
+                            <div class="flex flex-col items-center text-center px-6">
+                                <img src="https://via.placeholder.com/100" alt="User" class="w-20 h-20 rounded-full mb-4 border-4 border-red-100 dark:border-gray-700">
+                                <div class="flex items-center mb-3">
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star" class="h-5 w-5 text-yellow-500 fill-current"></i>
+                                    <i data-feather="star-half" class="h-5 w-5 text-yellow-500"></i>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">"As a collector, I appreciate the security and authenticity checks BidMaster provides. The customer support is also excellent when I needed help with a transaction."</p>
+                                <h4 class="font-semibold">Jennifer Lee</h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-500">Art Collector</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-center mb-10">How BidMaster Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md text-center relative hover:shadow-lg transition-shadow duration-300">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-red-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold">1</div>
+                    <div class="mt-4 mb-4">
+                        <i data-feather="search" class="h-12 w-12 mx-auto text-red-800 dark:text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Find Items</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Browse through thousands of unique items or use our search to find exactly what you're looking for.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md text-center relative hover:shadow-lg transition-shadow duration-300">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-red-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold">2</div>
+                    <div class="mt-4 mb-4">
+                        <i data-feather="tag" class="h-12 w-12 mx-auto text-red-800 dark:text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Place Your Bid</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Bid on items you love and keep track of auctions with real-time updates and notifications.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md text-center relative hover:shadow-lg transition-shadow duration-300">
+                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-red-800 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold">3</div>
+                    <div class="mt-4 mb-4">
+                        <i data-feather="check-circle" class="h-12 w-12 mx-auto text-red-800 dark:text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Win & Receive</h3>
+                    <p class="text-gray-600 dark:text-gray-400">If you win the auction, we'll handle the secure payment and the seller will ship your item directly to you.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-red-800 to-black rounded-lg overflow-hidden shadow-lg">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="p-6 md:p-10 md:w-2/3 text-white">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to Start Selling?</h2>
+                        <p class="mb-6">Turn your collectibles into cash. Join thousands of sellers who've found buyers for their unique items.</p>
+                        <a href="sell-item.html" class="inline-block bg-white text-red-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200 transform hover:scale-105">Start Selling Now</a>
+                    </div>
+                    <div class="md:w-1/3">
+                        <img src="https://via.placeholder.com/400x300" alt="Selling Banner" class="h-full w-full object-cover">
                     </div>
                 </div>
             </div>
@@ -170,34 +435,65 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-800 shadow-inner py-8">
+    <footer class="bg-white dark:bg-gray-800 shadow-inner py-12">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-xl font-bold text-red-800 dark:text-red-500 mb-4">BidMaster</h3>
-                    <p class="text-gray-600 dark:text-gray-400 max-w-md">Your trusted platform for online auctions. Find unique items or sell your valuables to the highest bidder.</p>
+            <div class="flex flex-col md:flex-row justify-between mb-8">
+                <div class="mb-8 md:mb-0 md:w-1/3">
+                    <h3 class="text-2xl font-bold text-red-800 dark:text-red-500 mb-4">BidMaster</h3>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-md mb-6">Your trusted platform for online auctions. Find unique items or sell your valuables to the highest bidder.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">
+                            <i data-feather="facebook" class="h-6 w-6"></i>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">
+                            <i data-feather="twitter" class="h-6 w-6"></i>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">
+                            <i data-feather="instagram" class="h-6 w-6"></i>
+                            <span class="sr-only">Instagram</span>
+                        </a>
+                    </div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:w-2/3">
                     <div>
                         <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                         <ul class="space-y-2">
-                            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Home</a></li>
-                            <li><a href="category.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Categories</a></li>
-                            <li><a href="sell-item.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Sell an Item</a></li>
+                            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Home</a></li>
+                            <li><a href="category.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Categories</a></li>
+                            <li><a href="search-results.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Search</a></li>
+                            <li><a href="sell-item.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Sell an Item</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Account</h4>
+                        <ul class="space-y-2">
+                            <li><a href="login.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Login</a></li>
+                            <li><a href="register.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Register</a></li>
+                            <li><a href="profile.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Profile</a></li>
+                            <li><a href="my-bids.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">My Bids</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="text-lg font-semibold mb-4">Help</h4>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">FAQ</a></li>
-                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Contact Us</a></li>
-                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Contact Us</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500 transition-colors duration-200">Privacy Policy</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400">
-                <p>&copy; 2023 BidMaster. All rights reserved.</p>
+            <div class="border-t border-gray-200 dark:border-gray-700 pt-8 mt-8 text-center text-gray-600 dark:text-gray-400">
+                <p class="mb-4">&copy; 2023 BidMaster. All rights reserved.</p>
+                <div class="flex justify-center space-x-4">
+                    <img src="https://via.placeholder.com/60x30" alt="Visa" class="h-8">
+                    <img src="https://via.placeholder.com/60x30" alt="Mastercard" class="h-8">
+                    <img src="https://via.placeholder.com/60x30" alt="PayPal" class="h-8">
+                    <img src="https://via.placeholder.com/60x30" alt="Apple Pay" class="h-8">
+                </div>
             </div>
         </div>
     </footer>
@@ -237,6 +533,137 @@
                 localStorage.setItem('theme', currentTheme);
                 feather.replace(); // Re-initialize icons after theme change
             });
+
+            // Profile menu toggle
+            const profileMenuButton = document.getElementById('profile-menu-button');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            
+            if (profileMenuButton && profileDropdown) {
+                profileMenuButton.addEventListener('click', () => {
+                    profileDropdown.classList.toggle('hidden');
+                });
+                
+                // Close the dropdown when clicking outside
+                document.addEventListener('click', (event) => {
+                    if (!profileMenuButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+                        profileDropdown.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Initialize Hero Swiper
+            const heroSwiper = new Swiper('.hero-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                on: {
+                    slideChangeTransitionStart: function() {
+                        // Hide elements
+                        document.querySelectorAll('.slide-title, .slide-description, .slide-button').forEach(el => {
+                            el.style.opacity = '0';
+                            el.style.transform = 'translateY(20px)';
+                        });
+                    },
+                    slideChangeTransitionEnd: function() {
+                        // Show elements with delay
+                        const activeSlide = document.querySelector('.swiper-slide-active');
+                        if (activeSlide) {
+                            const title = activeSlide.querySelector('.slide-title');
+                            const description = activeSlide.querySelector('.slide-description');
+                            const button = activeSlide.querySelector('.slide-button');
+                            
+                            if (title) {
+                                setTimeout(() => {
+                                    title.style.opacity = '1';
+                                    title.style.transform = 'translateY(0)';
+                                }, 100);
+                            }
+                            
+                            if (description) {
+                                setTimeout(() => {
+                                    description.style.opacity = '1';
+                                    description.style.transform = 'translateY(0)';
+                                }, 300);
+                            }
+                            
+                            if (button) {
+                                setTimeout(() => {
+                                    button.style.opacity = '1';
+                                    button.style.transform = 'translateY(0)';
+                                }, 500);
+                            }
+                        }
+                    },
+                },
+            });
+
+            // Initialize Testimonial Swiper
+            const testimonialSwiper = new Swiper('.testimonial-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                },
+            });
+
+            // Update countdown timers
+            function updateCountdowns() {
+                document.querySelectorAll('.countdown-timer').forEach(timer => {
+                    const endTime = new Date(timer.getAttribute('data-end')).getTime();
+                    const now = new Date().getTime();
+                    const diff = endTime - now;
+                    
+                    if (diff <= 0) {
+                        timer.textContent = 'Ended';
+                        return;
+                    }
+                    
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    
+                    if (days > 0) {
+                        timer.textContent = `${days}d ${hours}h`;
+                    } else {
+                        timer.textContent = `${hours}h ${minutes}m`;
+                    }
+                });
+            }
+            
+            // Initial update
+            updateCountdowns();
+            
+            // Update every minute
+            setInterval(updateCountdowns, 60000);
         });
     </script>
 </body>
