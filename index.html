@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidMaster - Online Auction Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col transition-colors duration-200">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-md">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-red-800 dark:text-red-500">BidMaster</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Home</a>
+                    <a href="category.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Categories</a>
+                    <a href="notifications.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Notifications</a>
+                    <a href="sell-item.html" class="px-4 py-2 rounded-md text-sm font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200">Sell an Item</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none">
+                        <i data-feather="moon" class="dark:hidden"></i>
+                        <i data-feather="sun" class="hidden dark:block"></i>
+                    </button>
+                    <div class="relative">
+                        <button class="flex items-center focus:outline-none">
+                            <img src="https://via.placeholder.com/40" alt="Profile" class="h-8 w-8 rounded-full">
+                        </button>
+                    </div>
+                    <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Home</a>
+                    <a href="category.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Categories</a>
+                    <a href="notifications.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Notifications</a>
+                    <a href="sell-item.html" class="block px-3 py-2 rounded-md text-base font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200 mt-2">Sell an Item</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-10">
+            <div class="bg-red-800 dark:bg-red-900 rounded-lg shadow-lg p-6 md:p-10 text-white">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">Find and Bid on Exclusive Items</h1>
+                <p class="text-lg mb-6">Discover unique items and place your bids in real-time.</p>
+                
+                <!-- Search Bar -->
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-grow">
+                        <form action="search-results.html" method="get" class="flex">
+                            <input type="text" name="query" placeholder="Search for items..." class="w-full px-4 py-3 rounded-l-lg text-gray-800 focus:outline-none">
+                            <button type="submit" class="bg-black dark:bg-gray-800 px-6 py-3 rounded-r-lg hover:bg-gray-900 transition-colors duration-200">
+                                <i data-feather="search" class="h-5 w-5"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <a href="sell-item.html" class="bg-black dark:bg-gray-800 px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors duration-200 text-center">
+                        Sell an Item
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="mb-10">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Categories</h2>
+                <a href="category.html" class="text-red-800 dark:text-red-500 hover:underline">View All</a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <a href="category.html?category=electronics" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-medium">Electronics</span>
+                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(42)</span>
+                    </div>
+                </a>
+                <a href="category.html?category=collectibles" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-medium">Collectibles</span>
+                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(28)</span>
+                    </div>
+                </a>
+                <a href="category.html?category=art" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-medium">Art</span>
+                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(15)</span>
+                    </div>
+                </a>
+                <a href="category.html?category=jewelry" class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-lg font-medium">Jewelry</span>
+                        <span class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-full text-sm">(23)</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Featured Auctions -->
+        <section>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Featured Auctions</h2>
+                <a href="search-results.html" class="text-red-800 dark:text-red-500 hover:underline">View All</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Auction Item 1 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <img src="https://via.placeholder.com/400x300" alt="Vintage Camera" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Vintage Leica Camera</h3>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-gray-600 dark:text-gray-400">Current Bid:</span>
+                            <span class="font-bold text-red-800 dark:text-red-500">$1,250</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Ends in: 2d 14h</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">15 bids</span>
+                        </div>
+                        <a href="item-details.html?id=1" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200">Place Bid</a>
+                    </div>
+                </div>
+
+                <!-- Auction Item 2 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <img src="https://via.placeholder.com/400x300" alt="Antique Watch" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Antique Pocket Watch</h3>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-gray-600 dark:text-gray-400">Current Bid:</span>
+                            <span class="font-bold text-red-800 dark:text-red-500">$850</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Ends in: 1d 8h</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">9 bids</span>
+                        </div>
+                        <a href="item-details.html?id=2" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200">Place Bid</a>
+                    </div>
+                </div>
+
+                <!-- Auction Item 3 -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <img src="https://via.placeholder.com/400x300" alt="Signed Vinyl" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Signed Vinyl Record</h3>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-gray-600 dark:text-gray-400">Current Bid:</span>
+                            <span class="font-bold text-red-800 dark:text-red-500">$320</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Ends in: 3d 22h</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">7 bids</span>
+                        </div>
+                        <a href="item-details.html?id=3" class="block w-full bg-red-800 text-white text-center py-2 rounded-md hover:bg-red-700 transition-colors duration-200">Place Bid</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 shadow-inner py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold text-red-800 dark:text-red-500 mb-4">BidMaster</h3>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-md">Your trusted platform for online auctions. Find unique items or sell your valuables to the highest bidder.</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Home</a></li>
+                            <li><a href="category.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Categories</a></li>
+                            <li><a href="sell-item.html" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Sell an Item</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Help</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">FAQ</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Contact Us</a></li>
+                            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-red-800 dark:hover:text-red-500">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400">
+                <p>&copy; 2023 BidMaster. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference or use system preference
+            const savedTheme = localStorage.getItem('theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            // Apply the saved theme
+            if (savedTheme === 'dark') {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+            
+            // Toggle theme
+            themeToggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+                localStorage.setItem('theme', currentTheme);
+                feather.replace(); // Re-initialize icons after theme change
+            });
+        });
+    </script>
+</body>
+</html>
+
