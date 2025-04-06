@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Premium Auctions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --color-primary: #991b1b;
+            --color-light: #ffffff;
+            --color-dark: #1a1a1a;
+            --color-gray: #f8f9fa;
+            --color-gray-dark: #e9ecef;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--color-dark);
+            background-color: var(--color-light);
+        }
+        
+        .bg-primary {
+            background-color: var(--color-primary) !important;
+        }
+        
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #7a1616;
+            border-color: #7a1616;
+        }
+        
+        .btn-outline-primary {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+        }
+        
+        .hero-section {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        .contact-card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(153, 27, 27, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover .contact-icon {
+            background-color: var(--color-primary);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 400px;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(153, 27, 27, 0.1);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .map-container:hover .map-overlay {
+            opacity: 1;
+        }
+        
+        .contact-form-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-form-header {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .contact-form-body {
+            padding: 30px;
+            background-color: white;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 0.25rem rgba(153, 27, 27, 0.25);
+        }
+        
+        .form-label {
+            font-weight: 500;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background-color: #7a1616;
+        }
+        
+        .faq-card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .faq-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-header {
+            background-color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .faq-header h5 {
+            margin: 0;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+        
+        .faq-body {
+            padding: 0 20px 20px;
+        }
+        
+        .faq-icon {
+            color: var(--color-primary);
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-card.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .floating-animation {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .rotate-animation {
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .map-marker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-primary);
+            border-radius: 50% 50% 50% 0;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+        
+        .map-marker::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 15px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        @keyframes bounce {
+            0% {
+                transform: translate(-50%, -50%) rotate(-45deg) translateY(0);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(-45deg) translateY(-10px);
+            }
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background-color: var(--color-danger);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-dropdown {
+            width: 300px;
+            padding: 0;
+        }
+        
+        .notification-header {
+            padding: 10px 15px;
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .notification-body {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notification-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .notification-item-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .notification-footer {
+            padding: 10px 15px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .notification-footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .notification-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .contact-shape {
+            position: absolute;
+            z-index: -1;
+        }
+        
+        .contact-shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(153, 27, 27, 0.05);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morphing 15s linear infinite alternate;
+        }
+        
+        .contact-shape-2 {
+            bottom: 10%;
+            right: 5%;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(153, 27, 27, 0.05);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morphing 20s linear infinite alternate;
+        }
+        
+        @keyframes morphing {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            25% {
+                border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+            }
+            50% {
+                border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+            }
+            75% {
+                border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+            }
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+        }
+        
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid var(--color-primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--color-primary) }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Premium Auctions</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Auctions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <div class="dropdown">
+                            <a class="nav-link position-relative" href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell"></i>
+                                <span class="notification-badge">3</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown">
+                                <div class="notification-header">
+                                    Notifications
+                                </div>
+                                <div class="notification-body">
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">You've been outbid on "Vintage Leather Chair"</div>
+                                        <div class="notification-item-time">2 minutes ago</div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">New auction: "First Edition Harry Potter"</div>
+                                        <div class="notification-item-time">15 minutes ago</div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">Your bid on "Retro Gaming Console" is winning!</div>
+                                        <div class="notification-item-time">1 hour ago</div>
+                                    </div>
+                                </div>
+                                <div class="notification-footer">
+                                    <a href="#">View all notifications</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-light" href="#">
+                            <i class="bi bi-person"></i> Account
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-pattern"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center animate__animated animate__fadeInDown">
+                    <h1 class="display-4 fw-bold mb-4">Get in Touch</h1>
+                    <p class="lead mb-4 typing-animation">We'd love to hear from you. Reach out to our team for any questions or assistance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info Cards -->
+    <section class="py-5 position-relative">
+        <div class="contact-shape contact-shape-1"></div>
+        <div class="contact-shape contact-shape-2"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="contact-card text-center p-4 fade-in">
+                        <div class="contact-icon">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <h4 class="mb-3">Our Location</h4>
+                        <p class="text-muted mb-0">123 Auction Avenue</p>
+                        <p class="text-muted mb-0">New York, NY 10001</p>
+                        <p class="text-muted mb-0">United States</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="contact-card text-center p-4 fade-in" data-delay="200">
+                        <div class="contact-icon">
+                            <i class="bi bi-telephone"></i>
+                        </div>
+                        <h4 class="mb-3">Call Us</h4>
+                        <p class="text-muted mb-0">Customer Support:</p>
+                        <p class="text-muted mb-0">+1 (555) 123-4567</p>
+                        <p class="text-muted mb-0">Mon-Fri: 9am - 6pm EST</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card text-center p-4 fade-in" data-delay="400">
+                        <div class="contact-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <h4 class="mb-3">Email Us</h4>
+                        <p class="text-muted mb-0">General Inquiries:</p>
+                        <p class="text-muted mb-0">info@premiumauctions.com</p>
+                        <p class="text-muted mb-0">Support: support@premiumauctions.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map and Contact Form -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="mb-4 text-primary">Find Us</h2>
+                    <div class="map-container fade-in">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425872426903!3d40.74076097132708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259bf5c1654f3%3A0xc80f9cfce5383d5d!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1682452889964!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="map-overlay"></div>
+                        <div class="map-marker"></div>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="mb-3">Our Business Hours</h4>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold">Monday - Friday:</span>
+                            <span>9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold">Saturday:</span>
+                            <span>10:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold">Sunday:</span>
+                            <span>Closed</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-form-container fade-in" data-delay="200">
+                        <div class="contact-form-header">
+                            <h2 class="mb-0">Send Us a Message</h2>
+                        </div>
+                        <div class="contact-form-body">
+                            <form id="contactForm">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Your Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 123-4567">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <select class="form-select" id="subject" required>
+                                        <option value="" selected disabled>Select a subject</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="bidding">Bidding Question</option>
+                                        <option value="selling">Selling an Item</option>
+                                        <option value="account">Account Support</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Your Message</label>
+                                    <textarea class="form-control" id="message" rows="5" placeholder="How can we help you?" required></textarea>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="newsletter">
+                                    <label class="form-check-label" for="newsletter">Subscribe to our newsletter</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 pulse-animation">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="text-primary mb-3">Frequently Asked Questions</h2>
+                    <p class="text-muted">Find answers to common questions about our auction process, bidding, and more.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="faq-card fade-in">
+                        <div class="faq-header" onclick="toggleFAQ(this)">
+                            <h5>How do I place a bid?</h5>
+                            <i class="bi bi-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-body" style="display: none;">
+                            <p class="text-muted">To place a bid, you need to create an account and provide payment information. Once registered, navigate to the auction item you're interested in and click the "Bid Now" button. Enter your bid amount (which must be higher than the current bid plus the increment) and confirm your bid.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card fade-in" data-delay="100">
+                        <div class="faq-header" onclick="toggleFAQ(this)">
+                            <h5>What happens if I win an auction?</h5>
+                            <i class="bi bi-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-body" style="display: none;">
+                            <p class="text-muted">If you win an auction, you'll receive a notification via email and in your account dashboard. You'll need to complete the payment within 48 hours. Once payment is confirmed, shipping arrangements will be made based on the item's details and your location.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card fade-in" data-delay="200">
+                        <div class="faq-header" onclick="toggleFAQ(this)">
+                            <h5>How can I sell items on your platform?</h5>
+                            <i class="bi bi-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-body" style="display: none;">
+                            <p class="text-muted">To sell items on our platform, you need to register as a seller. Once approved, you can submit your items for auction by providing detailed descriptions, high-quality photos, and setting a reserve price if desired. Our team will review your submission and schedule it for an upcoming auction.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card fade-in" data-delay="300">
+                        <div class="faq-header" onclick="toggleFAQ(this)">
+                            <h5>What payment methods do you accept?</h5>
+                            <i class="bi bi-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-body" style="display: none;">
+                            <p class="text-muted">We accept various payment methods including credit/debit cards (Visa, Mastercard, American Express), PayPal, bank transfers, and in some cases, cryptocurrency. All payments are processed securely through our encrypted payment system.</p>
+                        </div>
+                    </div>
+                    <div class="faq-card fade-in" data-delay="400">
+                        <div class="faq-header" onclick="toggleFAQ(this)">
+                            <h5>How do you verify the authenticity of items?</h5>
+                            <i class="bi bi-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-body" style="display: none;">
+                            <p class="text-muted">We have a team of experts who verify the authenticity of items before they're listed for auction. For high-value items, we may require certificates of authenticity or provenance. We also offer a guarantee on all items sold through our platform, ensuring they are as described.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="text-primary mb-3">Connect With Us</h2>
+                    <p class="text-muted">Follow us on social media for auction updates, feature announcements, and exclusive previews of upcoming auctions.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="d-flex justify-content-center">
+                        <a href="#" class="social-icon floating-animation">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="#" class="social-icon floating-animation" style="animation-delay: 0.2s;">
+                            <i class="bi bi-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon floating-animation" style="animation-delay: 0.4s;">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon floating-animation" style="animation-delay: 0.6s;">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-icon floating-animation" style="animation-delay: 0.8s;">
+                            <i class="bi bi-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="text-primary mb-3">Subscribe to Our Newsletter</h2>
+                    <p class="text-muted mb-4">Stay updated with our latest auctions, featured items, and exclusive offers.</p>
+                    <form class="d-flex justify-content-center">
+                        <div class="input-group mb-3" style="max-width: 500px;">
+                            <input type="email" class="form-control" placeholder="Your email address" aria-label="Email address" aria-describedby="subscribe-btn">
+                            <button class="btn btn-primary" type="button" id="subscribe-btn">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Premium Auctions</h5>
+                    <p class="text-muted">Your trusted destination for unique and valuable items. We connect buyers and sellers in a secure and transparent auction environment.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Auctions</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5 class="mb-3">Legal</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Refund Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 text-muted"><i class="bi bi-geo-alt me-2"></i>123 Auction Avenue, NY 10001</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-telephone me-2"></i>+1 (555) 123-4567</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-envelope me-2"></i>info@premiumauctions.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-muted mb-0">&copy; 2023 Premium Auctions. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-inline-flex">
+                        <img src="https://via.placeholder.com/40x25" alt="Visa" class="me-2">
+                        <img src="https://via.placeholder.com/40x25" alt="Mastercard" class="me-2">
+                        <img src="https://via.placeholder.com/40x25" alt="American Express" class="me-2">
+                        <img src="https://via.placeholder.com/40x25" alt="PayPal">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Contact Page JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade-in animation on scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-delay') || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, delay);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                fadeInObserver.observe(element);
+            });
+            
+            // FAQ toggle
+            window.toggleFAQ = function(element) {
+                const faqCard = element.closest('.faq-card');
+                const faqBody = faqCard.querySelector('.faq-body');
+                
+                if (faqBody.style.display === 'none') {
+                    faqBody.style.display = 'block';
+                    faqCard.classList.add('active');
+                } else {
+                    faqBody.style.display = 'none';
+                    faqCard.classList.remove('active');
+                }
+            };
+            
+            // Contact form submission
+            const contactForm = document.getElementById('contactForm');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Simulate form submission
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+                    
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Sending...';
+                    
+                    setTimeout(() => {
+                        // Show success message
+                        const formContainer = this.closest('.contact-form-body');
+                        formContainer.innerHTML = `
+                            <div class="text-center py-5">
+                                <div class="mb-4">
+                                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                                </div>
+                                <h3 class="mb-3">Message Sent Successfully!</h3>
+                                <p class="text-muted mb-4">Thank you for reaching out. We'll get back to you as soon as possible.</p>
+                                <button class="btn btn-primary" onclick="resetContactForm()">Send Another Message</button>
+                            </div>
+                        `;
+                    }, 2000);
+                });
+            }
+            
+            // Reset contact form
+            window.resetContactForm = function() {
+                location.reload();
+            };
+            
+            // Newsletter subscription
+            const subscribeBtn = document.getElementById('subscribe-btn');
+            
+            if (subscribeBtn) {
+                subscribeBtn.addEventListener('click', function() {
+                    const emailInput = this.previousElementSibling;
+                    const email = emailInput.value.trim();
+                    
+                    if (email === '') {
+                        alert('Please enter your email address.');
+                        return;
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        alert('Please enter a valid email address.');
+                        return;
+                    }
+                    
+                    // Simulate subscription
+                    const originalText = this.innerHTML;
+                    
+                    this.disabled = true;
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Subscribing...';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="bi bi-check-lg me-2"></i> Subscribed!';
+                        this.classList.remove('btn-primary');
+                        this.classList.add('btn-success');
+                        emailInput.value = '';
+                        
+                        setTimeout(() => {
+                            this.disabled = false;
+                            this.innerHTML = originalText;
+                            this.classList.remove('btn-success');
+                            this.classList.add('btn-primary');
+                        }, 3000);
+                    }, 1500);
+                });
+            }
+            
+            // Validate email
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            // Map marker animation
+            const mapMarker = document.querySelector('.map-marker');
+            
+            if (mapMarker) {
+                mapMarker.addEventListener('click', function() {
+                    alert('Premium Auctions Headquarters\n123 Auction Avenue, New York, NY 10001');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

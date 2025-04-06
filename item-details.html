@@ -9,67 +9,58 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col transition-colors duration-200">
-    <!-- Navigation -->
-    <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+    <nav class="bg-red-800 text-white">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <a href="index.html" class="text-2xl font-bold text-red-800 dark:text-red-500">BidMaster</a>
-                </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border-b-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Home</a>
-                    <a href="category.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border-b-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Categories</a>
-                    <a href="notifications.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border-b-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Notifications</a>
-                    <a href="sell-item.html" class="px-4 py-2 rounded-md text-sm font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200 transform hover:scale-105">Sell an Item</a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none transform hover:scale-110 transition-transform duration-200">
-                        <i data-feather="moon" class="dark:hidden"></i>
-                        <i data-feather="sun" class="hidden dark:block"></i>
-                    </button>
-                    
-                    <!-- Login/Register Buttons -->
-                    <div class="hidden md:flex items-center space-x-2">
-                        <a href="login.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500 border border-gray-300 dark:border-gray-600 hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">Login</a>
-                        <a href="register.html" class="px-3 py-2 rounded-md text-sm font-medium bg-gray-800 dark:bg-gray-700 text-white hover:bg-red-800 dark:hover:bg-red-700 transition-colors duration-200">Register</a>
-                    </div>
-                    
-                    <div class="relative">
-                        <button id="profile-menu-button" class="flex items-center focus:outline-none">
-                            <img src="https://via.placeholder.com/40" alt="Profile" class="h-8 w-8 rounded-full border-2 border-transparent hover:border-red-800 dark:hover:border-red-500 transition-all duration-200">
-                        </button>
-                        <!-- Profile Dropdown -->
-                        <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-10 hidden transition-all duration-200">
-                            <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">My Profile</a>
-                            <a href="my-bids.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">My Bids</a>
-                            <a href="my-auctions.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">My Auctions</a>
-                            <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Settings</a>
-                            <div class="border-t border-gray-200 dark:border-gray-700"></div>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
-                        </div>
-                    </div>
-                    <button class="md:hidden focus:outline-none" id="mobile-menu-button">
-                        <i data-feather="menu"></i>
-                    </button>
-                </div>
+          <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+              <a href="index.html" class="text-2xl font-bold">BidMaster</a>
             </div>
-            <!-- Mobile Menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Home</a>
-                    <a href="category.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Categories</a>
-                    <a href="notifications.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Notifications</a>
-                    <a href="sell-item.html" class="block px-3 py-2 rounded-md text-base font-medium bg-red-800 text-white hover:bg-red-700 transition-colors duration-200 mt-2">Sell an Item</a>
-                    <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
-                    <a href="login.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Login</a>
-                    <a href="register.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-800 dark:hover:text-red-500">Register</a>
+            <div class="hidden md:flex items-center space-x-4">
+              <a href="index.html" class="px-3 py-2 rounded-md">Home</a>
+              <a href="category.html" class="px-3 py-2 rounded-md">Categories</a>
+      
+              <!-- Category Dropdown -->
+              <div class="relative group">
+                <button class="px-3 py-2 rounded-md">Category</button>
+                <div class="absolute hidden bg-white text-black group-hover:block shadow-md rounded-md w-48 mt-2">
+                  <a href="#" class="block px-4 py-2">Books</a>
+                  <a href="#" class="block px-4 py-2">Furniture</a>
+                  <a href="#" class="block px-4 py-2">Electronics</a>
                 </div>
+              </div>
+      
+              <a href="notifications.html" class="px-3 py-2 rounded-md">Notifications</a>
+              <a href="sell-item.html" class="px-4 py-2 rounded-md bg-green-500 text-white">Sell an Item</a>
             </div>
+            <div class="flex items-center space-x-4">
+              <button class="p-2 rounded-full">
+                <i data-feather="moon" class="dark:hidden"></i>
+                <i data-feather="sun" class="hidden dark:block"></i>
+              </button>
+      
+              <!-- Login/Register Buttons -->
+              <a href="login.html" class="px-3 py-2 rounded-md">Login</a>
+              <a href="register.html" class="px-3 py-2 rounded-md bg-gray-800 text-white">Register</a>
+      
+              <div class="relative">
+                <button id="profile-menu-button" class="flex items-center">
+                  <img src="https://via.placeholder.com/40" alt="Profile" class="h-8 w-8 rounded-full">
+                </button>
+                <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 hidden">
+                  <a href="profile.html" class="block px-4 py-2">My Profile</a>
+                  <a href="my-bids.html" class="block px-4 py-2">My Bids</a>
+                  <a href="settings.html" class="block px-4 py-2">Settings</a>
+                  <a href="#" class="block px-4 py-2">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </nav>
-
+      </nav>
+      
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8">
         <!-- Breadcrumbs -->
@@ -613,6 +604,27 @@
                 }
             });
         });
+        function toggleDropdown() {
+    const dropdown = document.getElementById('dropdownMenu');
+    dropdown.classList.toggle('hidden');
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById('navbar-menu');
+    menu.classList.toggle('hidden');
+  }
+
+  // Optional: Click outside to close dropdown
+  window.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('dropdownMenu');
+    const btn = e.target.closest('button');
+    if (!e.target.closest('#dropdownMenu') && (!btn || !btn.onclick)) {
+      dropdown?.classList.add('hidden');
+    }
+  });
     </script>
+    <!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
 </body>
 </html>

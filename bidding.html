@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Auctions - Premium Auctions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --color-primary: #991b1b;
+            --color-light: #ffffff;
+            --color-dark: #1a1a1a;
+            --color-gray: #f8f9fa;
+            --color-gray-dark: #e9ecef;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--color-dark);
+            background-color: var(--color-light);
+        }
+        
+        .bg-primary {
+            background-color: var(--color-primary) !important;
+        }
+        
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #7a1616;
+            border-color: #7a1616;
+        }
+        
+        .btn-outline-primary {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+        }
+        
+        .hero-section {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--color-dark);
+            border: none;
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--color-primary);
+            background-color: transparent;
+            border-bottom: 3px solid var(--color-primary);
+        }
+        
+        .nav-tabs .nav-link:hover:not(.active) {
+            border-bottom: 3px solid #e9ecef;
+        }
+        
+        .auction-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .auction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .auction-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+        
+        .auction-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .auction-card:hover .auction-img {
+            transform: scale(1.1);
+        }
+        
+        .auction-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+        
+        .auction-category {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        .auction-timer {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 8px 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .auction-timer.ending-soon {
+            background-color: var(--color-danger);
+            animation: pulse 1s infinite;
+        }
+        
+        .bid-count {
+            display: inline-block;
+            background-color: rgba(153, 27, 27, 0.1);
+            color: var(--color-primary);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .current-bid {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        
+        .bid-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .bid-input {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 8px 15px;
+            flex-grow: 1;
+        }
+        
+        .bid-btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .bid-btn:hover {
+            background-color: #7a1616;
+        }
+        
+        .trending-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--color-warning);
+            color: var(--color-dark);
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 20px;
+            z-index: 1;
+        }
+        
+        .hot-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--color-danger);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 20px;
+            z-index: 1;
+            animation: pulse 1s infinite;
+        }
+        
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--color-success);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 20px;
+            z-index: 1;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .bidder-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .recent-bidders {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .recent-bidders img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-left: -10px;
+        }
+        
+        .recent-bidders img:first-child {
+            margin-left: 0;
+        }
+        
+        .bid-history {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .bid-history-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .bid-history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .bid-history-amount {
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .bid-history-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-left: 10px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .filter-btn {
+            border: 1px solid #e9ecef;
+            background-color: white;
+            color: var(--color-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background-color: #f8f9fa;
+        }
+        
+        .search-form {
+            position: relative;
+        }
+        
+        .search-input {
+            padding-left: 40px;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--color-success);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1s infinite;
+        }
+        
+        .auction-details-modal .modal-header {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        .auction-details-modal .modal-body {
+            padding: 20px;
+        }
+        
+        .auction-details-img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .auction-details-info {
+            margin-bottom: 20px;
+        }
+        
+        .auction-details-info h5 {
+            margin-bottom: 10px;
+        }
+        
+        .auction-details-info p {
+            margin-bottom: 5px;
+        }
+        
+        .auction-details-description {
+            margin-bottom: 20px;
+        }
+        
+        .auction-details-bid-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .auction-details-bid-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .auction-details-bid-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        
+        .auction-details-bid-btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .auction-details-bid-btn:hover {
+            background-color: #7a1616;
+        }
+        
+        .auction-details-bid-history {
+            margin-top: 20px;
+        }
+        
+        .auction-details-bid-history h5 {
+            margin-bottom: 10px;
+        }
+        
+        .auction-details-bid-history-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .auction-details-bid-history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .auction-details-bid-history-amount {
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .auction-details-bid-history-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-left: 10px;
+        }
+        
+        .auction-details-seller {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .auction-details-seller img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .auction-details-seller-info h5 {
+            margin-bottom: 5px;
+        }
+        
+        .auction-details-seller-info p {
+            margin-bottom: 0;
+            color: #6c757d;
+        }
+        
+        .auction-details-seller-rating {
+            margin-left: auto;
+            color: var(--color-warning);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background-color: var(--color-danger);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-dropdown {
+            width: 300px;
+            padding: 0;
+        }
+        
+        .notification-header {
+            padding: 10px 15px;
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .notification-body {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notification-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .notification-item-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .notification-footer {
+            padding: 10px 15px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .notification-footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .notification-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .countdown-container {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            border-radius: 5px;
+            min-width: 40px;
+        }
+        
+        .countdown-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        
+        .bid-animation {
+            animation: bidPulse 1s;
+        }
+        
+        @keyframes bidPulse {
+            0% {
+                background-color: rgba(25, 135, 84, 0.2);
+            }
+            100% {
+                background-color: transparent;
+            }
+        }
+        
+        .floating-chat-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-chat-btn:hover {
+            transform: scale(1.1);
+            background-color: #7a1616;
+        }
+        
+        .floating-chat-btn i {
+            font-size: 1.5rem;
+        }
+        
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        .custom-toast {
+            background-color: white;
+            color: var(--color-dark);
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .custom-toast-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .custom-toast-body {
+            padding: 10px 15px;
+        }
+        
+        .custom-toast-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #6c757d;
+            margin-left: auto;
+            cursor: pointer;
+        }
+        
+        .watchlist-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .watchlist-btn:hover, .watchlist-btn.active {
+            color: var(--color-warning);
+        }
+        
+        .watchlist-btn.active i::before {
+            content: "\F586";
+        }
+        
+        .share-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .share-btn:hover {
+            color: var(--color-primary);
+        }
+        
+        .bid-increment-btn {
+            background: none;
+            border: 1px solid #ced4da;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .bid-increment-btn:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .bid-increment-container {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .bid-increment-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-right: 10px;
+        }
+        
+        .bid-increment-value {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .bid-increment-value:hover {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Premium Auctions</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Auctions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <div class="dropdown">
+                            <a class="nav-link position-relative" href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell"></i>
+                                <span class="notification-badge">3</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown">
+                                <div class="notification-header">
+                                    Notifications
+                                </div>
+                                <div class="notification-body">
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">You've been outbid on "Vintage Leather Chair"</div>
+                                        <div class="notification-item-time">2 minutes ago</div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">New auction: "First Edition Harry Potter"</div>
+                                        <div class="notification-item-time">15 minutes ago</div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">Your bid on "Retro Gaming Console" is winning!</div>
+                                        <div class="notification-item-time">1 hour ago</div>
+                                    </div>
+                                </div>
+                                <div class="notification-footer">
+                                    <a href="#">View all notifications</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-light" href="#">
+                            <i class="bi bi-person"></i> Account
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-pattern"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate__animated animate__fadeInLeft">
+                    <h1 class="display-5 fw-bold mb-4">Live Auctions</h1>
+                    <p class="lead mb-4">Bid on unique books, furniture, and electronic accessories from trusted sellers.</p>
+                    <div class="d-flex align-items-center">
+                        <span class="live-indicator"></span>
+                        <span class="fw-bold">1,245 active auctions</span>
+                        <span class="mx-3">•</span>
+                        <span><i class="bi bi-people-fill me-1"></i> 328 bidders online</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 animate__animated animate__fadeInRight">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card auction-card mb-3">
+                                <div class="auction-img-container">
+                                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Rare Book" class="auction-img">
+                                    <div class="auction-category">Books</div>
+                                    <div class="hot-badge">
+                                        <i class="bi bi-fire"></i> Hot
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card auction-card mb-3">
+                                <div class="auction-img-container">
+                                    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Vintage Chair" class="auction-img">
+                                    <div class="auction-category">Furniture</div>
+                                    <div class="trending-badge">
+                                        <i class="bi bi-graph-up"></i> Trending
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card auction-card">
+                                <div class="auction-img-container">
+                                    <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Vintage Electronics" class="auction-img">
+                                    <div class="auction-category">Electronics</div>
+                                    <div class="new-badge">
+                                        <i class="bi bi-stars"></i> New
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card auction-card">
+                                <div class="auction-img-container">
+                                    <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Antique Desk" class="auction-img">
+                                    <div class="auction-category">Furniture</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <form class="search-form">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" class="form-control search-input" placeholder="Search auctions..." id="searchInput">
+                    </form>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="Books">Books</button>
+                    <button class="filter-btn" data-category="Furniture">Furniture</button>
+                    <button class="filter-btn" data-category="Electronics">Electronics</button>
+                </div>
+            </div>
+            
+            <ul class="nav nav-tabs mb-4" id="auctionTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="latest-tab" data-bs-toggle="tab" data-bs-target="#latest" type="button" role="tab" aria-controls="latest" aria-selected="true">
+                        Latest Auctions
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="trending-tab" data-bs-toggle="tab" data-bs-target="#trending" type="button" role="tab" aria-controls="trending" aria-selected="false">
+                        Trending Now
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="most-bids-tab" data-bs-toggle="tab" data-bs-target="#most-bids" type="button" role="tab" aria-controls="most-bids" aria-selected="false">
+                        Most Bids
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="ending-soon-tab" data-bs-toggle="tab" data-bs-target="#ending-soon" type="button" role="tab" aria-controls="ending-soon" aria-selected="false">
+                        Ending Soon
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="auctionTabsContent">
+                <!-- Latest Auctions Tab -->
+                <div class="tab-pane fade show active" id="latest" role="tabpanel" aria-labelledby="latest-tab">
+                    <div class="row" id="latestAuctionsContainer">
+                        <!-- Cards will be dynamically generated here -->
+                    </div>
+                </div>
+                
+                <!-- Trending Now Tab -->
+                <div class="tab-pane fade" id="trending" role="tabpanel" aria-labelledby="trending-tab">
+                    <div class="row" id="trendingAuctionsContainer">
+                        <!-- Cards will be dynamically generated here -->
+                    </div>
+                </div>
+                
+                <!-- Most Bids Tab -->
+                <div class="tab-pane fade" id="most-bids" role="tabpanel" aria-labelledby="most-bids-tab">
+                    <div class="row" id="mostBidsAuctionsContainer">
+                        <!-- Cards will be dynamically generated here -->
+                    </div>
+                </div>
+                
+                <!-- Ending Soon Tab -->
+                <div class="tab-pane fade" id="ending-soon" role="tabpanel" aria-labelledby="ending-soon-tab">
+                    <div class="row" id="endingSoonAuctionsContainer">
+                        <!-- Cards will be dynamically generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auction Details Modal -->
+    <div class="modal fade" id="auctionDetailsModal" tabindex="-1" aria-labelledby="auctionDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content auction-details-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="auctionDetailsModalLabel">Auction Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="auctionDetailsContent">
+                    <!-- Modal content will be dynamically generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <div class="floating-chat-btn">
+        <i class="bi bi-chat-dots"></i>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Bidding Page JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auction data
+            const auctions = [
+                {
+                    id: 1,
+                    title: "First Edition 'The Great Gatsby'",
+                    description: "Rare first edition in excellent condition with original dust jacket.",
+                    category: "Books",
+                    image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 4250.00,
+                    bidCount: 12,
+                    endTime: "2023-12-31T23:59:59",
+                    badge: "new",
+                    bidders: [
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 4250.00, time: "2h ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 4100.00, time: "3h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 3950.00, time: "5h ago" }
+                    ],
+                    condition: "Excellent",
+                    year: "1925",
+                    publisher: "Charles Scribner's Sons",
+                    details: "Rare first edition in excellent condition with original dust jacket. This is a true first printing with all the correct points including 'chatter' on page 60, line 16, 'northern' on page 119, line 22, 'it's' on page 165, line 16, and 'Union Street station' on page 211, lines 7-8."
+                },
+                {
+                    id: 2,
+                    title: "Mid-Century Modern Lounge Chair",
+                    description: "Authentic 1960s Danish design with original upholstery.",
+                    category: "Furniture",
+                    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 1875.00,
+                    bidCount: 8,
+                    endTime: "2023-12-29T15:30:00",
+                    badge: "new",
+                    bidders: [
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 1875.00, time: "1h ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 1750.00, time: "3h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 1600.00, time: "6h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1962",
+                    designer: "Hans Wegner",
+                    details: "Authentic 1960s Danish design lounge chair with original wool upholstery. Solid teak frame with minimal wear consistent with age. A true mid-century modern classic that will elevate any interior space."
+                },
+                {
+                    id: 3,
+                    title: "Vintage Leica M3 Camera",
+                    description: "Classic 1950s rangefinder camera with original lens and case.",
+                    category: "Electronics",
+                    image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 3200.00,
+                    bidCount: 15,
+                    endTime: "2023-12-30T10:15:00",
+                    badge: "new",
+                    bidders: [
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 3200.00, time: "30m ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 3050.00, time: "2h ago" },
+                        { name: "David C.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 2900.00, time: "4h ago" }
+                    ],
+                    condition: "Excellent",
+                    year: "1954",
+                    manufacturer: "Leica",
+                    details: "Classic Leica M3 rangefinder camera in excellent working condition. Includes original 50mm Summicron lens, leather case, and lens cap. Shutter speeds are accurate, rangefinder is clear, and the film advance is smooth. A collector's dream."
+                },
+                {
+                    id: 4,
+                    title: "Complete Harry Potter First Edition Set",
+                    description: "All seven books, first editions, signed by J.K. Rowling.",
+                    category: "Books",
+                    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 12500.00,
+                    bidCount: 47,
+                    endTime: "2023-12-28T18:00:00",
+                    badge: "hot",
+                    bidders: [
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 12500.00, time: "15m ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 12000.00, time: "1h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 11500.00, time: "2h ago" }
+                    ],
+                    condition: "Mint",
+                    year: "1997-2007",
+                    publisher: "Bloomsbury",
+                    details: "Complete set of all seven Harry Potter books, all first editions, first printings. Each book is personally signed by J.K. Rowling on the title page. The Philosopher's Stone is a true first printing with the error on page 53. All books are in mint condition and come with a certificate of authenticity."
+                },
+                {
+                    id: 5,
+                    title: "Rare Nintendo Entertainment System",
+                    description: "Original NES in box with 10 classic games and accessories.",
+                    category: "Electronics",
+                    image: "https://images.unsplash.com/photo-1611486212557-88be5ff6f941?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 2850.00,
+                    bidCount: 68,
+                    endTime: "2023-12-31T12:00:00",
+                    badge: "hot",
+                    bidders: [
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 2850.00, time: "10m ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 2700.00, time: "1h ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 2550.00, time: "3h ago" }
+                    ],
+                    condition: "Excellent",
+                    year: "1985",
+                    manufacturer: "Nintendo",
+                    details: "Original Nintendo Entertainment System in excellent condition with original box, two controllers, Zapper light gun, and 10 classic games including Super Mario Bros., The Legend of Zelda, and Metroid. Console has been tested and works perfectly."
+                },
+                {
+                    id: 6,
+                    title: "Victorian Writing Desk",
+                    description: "Beautifully preserved 19th century mahogany writing desk.",
+                    category: "Furniture",
+                    image: "https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 4750.00,
+                    bidCount: 23,
+                    endTime: "2023-12-28T09:30:00",
+                    badge: "",
+                    bidders: [
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 4750.00, time: "45m ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 4500.00, time: "2h ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 4250.00, time: "5h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1875",
+                    style: "Victorian",
+                    details: "Beautifully preserved Victorian mahogany writing desk with original brass hardware. Features multiple drawers, a leather writing surface, and intricate carved details. Some patina and minor wear consistent with age, but overall in excellent condition for a piece nearly 150 years old."
+                },
+                {
+                    id: 7,
+                    title: "First Edition 'To Kill a Mockingbird'",
+                    description: "Rare first printing with original dust jacket, signed by Harper Lee.",
+                    category: "Books",
+                    image: "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 8500.00,
+                    bidCount: 32,
+                    endTime: "2023-12-29T20:00:00",
+                    badge: "trending",
+                    bidders: [
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 8500.00, time: "1h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 8200.00, time: "3h ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 7900.00, time: "5h ago" }
+                    ],
+                    condition: "Very Good",
+                    year: "1960",
+                    publisher: "J.B. Lippincott & Co.",
+                    details: "First edition, first printing of Harper Lee's Pulitzer Prize-winning novel with the original dust jacket. Signed by Harper Lee on the title page. Book is in very good condition with minimal wear; dust jacket has been professionally preserved."
+                },
+                {
+                    id: 8,
+                    title: "Vintage Eames Lounge Chair and Ottoman",
+                    description: "Authentic Herman Miller Eames lounge chair in rosewood and black leather.",
+                    category: "Furniture",
+                    image: "https://images.unsplash.com/photo-1567016432779-094069958ea5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 5200.00,
+                    bidCount: 18,
+                    endTime: "2023-12-30T14:30:00",
+                    badge: "trending",
+                    bidders: [
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 5200.00, time: "2h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 5000.00, time: "4h ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 4800.00, time: "7h ago" }
+                    ],
+                    condition: "Excellent",
+                    year: "1972",
+                    designer: "Charles & Ray Eames",
+                    details: "Authentic Herman Miller Eames lounge chair and ottoman in rosewood veneer and black leather. This is a vintage 1970s production in excellent condition with minimal wear. The leather is supple with no cracks or tears, and the rosewood veneer is in beautiful condition."
+                },
+                {
+                    id: 9,
+                    title: "Vintage Polaroid SX-70 Land Camera",
+                    description: "Iconic folding SLR instant camera in working condition with original case.",
+                    category: "Electronics",
+                    image: "https://images.unsplash.com/photo-1526739178501-2cb8813ea595?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 950.00,
+                    bidCount: 14,
+                    endTime: "2023-12-29T11:45:00",
+                    badge: "trending",
+                    bidders: [
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 950.00, time: "3h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 900.00, time: "5h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 850.00, time: "8h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1972",
+                    manufacturer: "Polaroid",
+                    details: "Iconic Polaroid SX-70 Land Camera in good working condition. This is the original model with chrome and leather finish. Camera folds flat and opens smoothly. Viewfinder is clear, and the camera has been tested with current Polaroid film. Includes original leather case."
+                },
+                {
+                    id: 10,
+                    title: "Rare First Edition 'Lord of the Rings' Trilogy",
+                    description: "Complete set of first editions with original maps and dust jackets.",
+                    category: "Books",
+                    image: "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 15000.00,
+                    bidCount: 38,
+                    endTime: "2023-12-28T16:15:00",
+                    badge: "hot",
+                    bidders: [
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 15000.00, time: "30m ago" },
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 14500.00, time: "2h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 14000.00, time: "4h ago" }
+                    ],
+                    condition: "Very Good",
+                    year: "1954-1955",
+                    publisher: "George Allen & Unwin",
+                    details: "Complete set of first edition, first impressions of J.R.R. Tolkien's 'The Lord of the Rings' trilogy. All three volumes include the original fold-out maps and dust jackets. Books are in very good condition with minimal wear; dust jackets show some light edge wear but have been professionally preserved."
+                },
+                {
+                    id: 11,
+                    title: "Art Deco Cocktail Cabinet",
+                    description: "1930s walnut cocktail cabinet with mirrored interior and original fittings.",
+                    category: "Furniture",
+                    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 3800.00,
+                    bidCount: 21,
+                    endTime: "2023-12-30T19:00:00",
+                    badge: "",
+                    bidders: [
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 3800.00, time: "1h ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 3650.00, time: "3h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 3500.00, time: "6h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1935",
+                    style: "Art Deco",
+                    details: "Stunning 1930s Art Deco cocktail cabinet in walnut with geometric inlays. Features a mirrored interior, original glass shelves, and cocktail accessories. Cabinet stands on elegant tapered legs with brass caps. Some patina and minor wear consistent with age, but overall in excellent condition."
+                },
+                {
+                    id: 12,
+                    title: "Vintage Apple Macintosh 128K",
+                    description: "Original 1984 Macintosh computer in working condition with accessories.",
+                    category: "Electronics",
+                    image: "https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 7500.00,
+                    bidCount: 29,
+                    endTime: "2023-12-31T10:00:00",
+                    badge: "hot",
+                    bidders: [
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 7500.00, time: "45m ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 7250.00, time: "2h ago" },
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 7000.00, time: "5h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1984",
+                    manufacturer: "Apple",
+                    details: "Original Apple Macintosh 128K computer from 1984 in good working condition. Includes original keyboard, mouse, and power cable. The computer boots up properly and the display is clear. A rare piece of computing history that marked the beginning of the personal computer revolution."
+                },
+                {
+                    id: 13,
+                    title: "First Edition 'One Hundred Years of Solitude'",
+                    description: "Rare first edition in Spanish, signed by Gabriel García Márquez.",
+                    category: "Books",
+                    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 9800.00,
+                    bidCount: 26,
+                    endTime: "2023-12-29T13:30:00",
+                    badge: "",
+                    bidders: [
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 9800.00, time: "2h ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 9500.00, time: "4h ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 9200.00, time: "7h ago" }
+                    ],
+                    condition: "Very Good",
+                    year: "1967",
+                    publisher: "Editorial Sudamericana",
+                    details: "First edition, first printing of 'Cien Años de Soledad' (One Hundred Years of Solitude) in Spanish, published by Editorial Sudamericana in 1967. Signed by Gabriel García Márquez on the title page. Book is in very good condition with minimal wear to the binding and pages."
+                },
+                {
+                    id: 14,
+                    title: "Mid-Century Teak Dining Set",
+                    description: "Complete Danish teak dining set with table and six chairs, circa 1960.",
+                    category: "Furniture",
+                    image: "https://images.unsplash.com/photo-1577140917170-285929fb55b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 4200.00,
+                    bidCount: 16,
+                    endTime: "2023-12-30T17:45:00",
+                    badge: "",
+                    bidders: [
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 4200.00, time: "3h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 4000.00, time: "5h ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 3800.00, time: "8h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1960",
+                    designer: "Niels Otto Møller",
+                    details: "Complete Danish mid-century modern dining set in solid teak, featuring an extendable table and six Model 78 chairs designed by Niels Otto Møller. The table extends with two leaves to seat up to ten people. All pieces show beautiful patina and are in good condition with some minor wear consistent with age and use."
+                },
+                {
+                    id: 15,
+                    title: "Vintage Sony Walkman TPS-L2",
+                    description: "Original first model Walkman in working condition with headphones.",
+                    category: "Electronics",
+                    image: "https://images.unsplash.com/photo-1594549181132-9045fed330ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+                    currentBid: 1650.00,
+                    bidCount: 22,
+                    endTime: "2023-12-28T12:00:00",
+                    badge: "trending",
+                    bidders: [
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 1650.00, time: "1h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 1550.00, time: "3h ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 1450.00, time: "6h ago" }
+                    ],
+                    condition: "Good",
+                    year: "1979",
+                    manufacturer: "Sony",
+                    details: "Original Sony Walkman TPS-L2, the first model Walkman ever produced. This iconic portable cassette player is in good working condition with original headphones and carrying case. The blue and silver design is clean with minimal scratches. All buttons and functions work properly. A true piece of audio history that revolutionized how people listen to music."
+                }
+            ];
+
+            // Categorize auctions
+            const latestAuctions = auctions.filter(auction => auction.badge === "new");
+            const trendingAuctions = auctions.filter(auction => auction.badge === "trending");
+            const hotAuctions = auctions.filter(auction => auction.badge === "hot");
+            const endingSoonAuctions = [...auctions].sort((a, b) => new Date(a.endTime) - new Date(b.endTime)).slice(0, 5);
+            const mostBidsAuctions = [...auctions].sort((a, b) => b.bidCount - a.bidCount).slice(0, 5);
+
+            // Function to create auction card HTML
+            function createAuctionCard(auction) {
+                let badgeHTML = '';
+                if (auction.badge === 'hot') {
+                    badgeHTML = `<div class="hot-badge"><i class="bi bi-fire"></i> Hot</div>`;
+                } else if (auction.badge === 'trending') {
+                    badgeHTML = `<div class="trending-badge"><i class="bi bi-graph-up"></i> Trending</div>`;
+                } else if (auction.badge === 'new') {
+                    badgeHTML = `<div class="new-badge"><i class="bi bi-stars"></i> New</div>`;
+                }
+
+                return `
+                    <div class="col-lg-4 col-md-6 mb-4 auction-item" data-id="${auction.id}" data-category="${auction.category}">
+                        <div class="card auction-card fade-in">
+                            <div class="auction-img-container">
+                                <img src="${auction.image}" alt="${auction.title}" class="auction-img">
+                                <div class="auction-category">${auction.category}</div>
+                                ${badgeHTML}
+                            </div>
+                            <div class="auction-timer" data-end="${auction.endTime}">
+                                <i class="bi bi-clock"></i>
+                                <div class="countdown-container">
+                                    <div class="countdown-item">
+                                        <span class="countdown-value days">0</span>
+                                        <span class="countdown-label">d</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value hours">0</span>
+                                        <span class="countdown-label">h</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value minutes">0</span>
+                                        <span class="countdown-label">m</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value seconds">0</span>
+                                        <span class="countdown-label">s</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">${auction.title}</h5>
+                                <p class="card-text text-muted mb-3">${auction.description}</p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="bid-count"><i class="bi bi-graph-up me-1"></i> ${auction.bidCount} bids</span>
+                                    <div class="d-flex align-items-center">
+                                        <button class="watchlist-btn me-2" title="Add to watchlist">
+                                            <i class="bi bi-star"></i>
+                                        </button>
+                                        <button class="share-btn" title="Share">
+                                            <i class="bi bi-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <div class="text-muted small">Current Bid</div>
+                                        <div class="current-bid">$${auction.currentBid.toFixed(2)}</div>
+                                    </div>
+                                    <button class="btn btn-primary bid-now-btn" data-id="${auction.id}">
+                                        Bid Now
+                                    </button>
+                                </div>
+                                <div class="recent-bidders">
+                                    ${auction.bidders.map((bidder, index) => 
+                                        `<img src="${bidder.image}" alt="Bidder" title="${bidder.name} - $${bidder.bid.toFixed(2)}">`
+                                    ).join('')}
+                                    <div class="ms-2 text-muted small">+${auction.bidCount - auction.bidders.length} more</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Function to render auction cards
+            function renderAuctions(auctionsList, containerId) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                
+                auctionsList.forEach(auction => {
+                    container.innerHTML += createAuctionCard(auction);
+                });
+                
+                // Initialize fade-in animation
+                initFadeInAnimation();
+                
+                // Initialize countdown timers
+                updateCountdowns();
+            }
+
+            // Render auctions in each tab
+            renderAuctions(latestAuctions, 'latestAuctionsContainer');
+            renderAuctions(trendingAuctions, 'trendingAuctionsContainer');
+            renderAuctions(mostBidsAuctions, 'mostBidsAuctionsContainer');
+            renderAuctions(endingSoonAuctions, 'endingSoonAuctionsContainer');
+
+            // Function to create auction details modal content
+            function createAuctionDetailsContent(auction) {
+                return `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="${auction.image}" alt="${auction.title}" class="auction-details-img">
+                            <div class="d-flex justify-content-between mb-3">
+                                <button class="watchlist-btn" title="Add to watchlist">
+                                    <i class="bi bi-star"></i> Add to Watchlist
+                                </button>
+                                <button class="share-btn" title="Share">
+                                    <i class="bi bi-share"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="auction-details-info">
+                                <h5>Item Details</h5>
+                                <p><strong>Category:</strong> ${auction.category}</p>
+                                <p><strong>Condition:</strong> ${auction.condition}</p>
+                                <p><strong>Year:</strong> ${auction.year}</p>
+                                ${auction.publisher ? `<p><strong>Publisher:</strong> ${auction.publisher}</p>` : ''}
+                                ${auction.manufacturer ? `<p><strong>Manufacturer:</strong> ${auction.manufacturer}</p>` : ''}
+                                ${auction.designer ? `<p><strong>Designer:</strong> ${auction.designer}</p>` : ''}
+                                ${auction.style ? `<p><strong>Style:</strong> ${auction.style}</p>` : ''}
+                            </div>
+                            <div class="auction-details-description">
+                                <h5>Description</h5>
+                                <p>${auction.details}</p>
+                            </div>
+                            <div class="auction-timer mb-3" data-end="${auction.endTime}">
+                                <i class="bi bi-clock"></i>
+                                <div class="countdown-container">
+                                    <div class="countdown-item">
+                                        <span class="countdown-value days">0</span>
+                                        <span class="countdown-label">d</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value hours">0</span>
+                                        <span class="countdown-label">h</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value minutes">0</span>
+                                        <span class="countdown-label">m</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value seconds">0</span>
+                                        <span class="countdown-label">s</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="auction-details-bid-section">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <div class="text-muted small">Current Bid</div>
+                                        <div class="current-bid">$${auction.currentBid.toFixed(2)}</div>
+                                    </div>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-graph-up me-1"></i> ${auction.bidCount} bids
+                                    </div>
+                                </div>
+                                <div class="bid-increment-container mb-3">
+                                    <span class="bid-increment-label">Bid Increment:</span>
+                                    <span class="bid-increment-value">$100</span>
+                                    <span class="bid-increment-value">$250</span>
+                                    <span class="bid-increment-value">$500</span>
+                                </div>
+                                <form class="auction-details-bid-form">
+                                    <input type="number" class="auction-details-bid-input" placeholder="Enter your bid (min. $${(auction.currentBid + 50).toFixed(2)})" min="${auction.currentBid + 50}" step="50">
+                                    <button type="submit" class="auction-details-bid-btn">Place Bid</button>
+                                </form>
+                                <div class="text-muted small mt-2">
+                                    By placing a bid, you agree to our <a href="#">Terms & Conditions</a>
+                                </div>
+                            </div>
+                            <div class="auction-details-bid-history">
+                                <h5>Bid History</h5>
+                                ${auction.bidders.map(bidder => `
+                                    <div class="auction-details-bid-history-item">
+                                        <img src="${bidder.image}" alt="Bidder" class="bidder-avatar me-2">
+                                        <div>
+                                            <div>${bidder.name}</div>
+                                            ${bidder.bid === auction.currentBid ? '<div class="text-muted small">Highest Bidder</div>' : ''}
+                                        </div>
+                                        <div class="auction-details-bid-history-amount">$${bidder.bid.toFixed(2)}</div>
+                                        <div class="auction-details-bid-history-time">${bidder.time}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="auction-details-seller">
+                                <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Seller">
+                                <div class="auction-details-seller-info">
+                                    <h5>Michael Thompson</h5>
+                                    <p>Premium Seller</p>
+                                </div>
+                                <div class="auction-details-seller-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="ms-1">4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Fade-in animation on scroll
+            function initFadeInAnimation() {
+                const fadeElements = document.querySelectorAll('.fade-in');
+                
+                const fadeInObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const delay = entry.target.getAttribute('data-delay') || 0;
+                            setTimeout(() => {
+                                entry.target.classList.add('active');
+                            }, delay);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                fadeElements.forEach(element => {
+                    fadeInObserver.observe(element);
+                });
+            }
+            
+            // Countdown timers
+            function updateCountdowns() {
+                const now = new Date().getTime();
+                const countdownContainers = document.querySelectorAll('.auction-timer');
+                
+                countdownContainers.forEach(container => {
+                    const endTime = new Date(container.getAttribute('data-end')).getTime();
+                    const timeLeft = endTime - now;
+                    
+                    if (timeLeft <= 0) {
+                        container.innerHTML = '<span class="text-danger">Auction Ended</span>';
+                        return;
+                    }
+                    
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    const daysElement = container.querySelector('.days');
+                    const hoursElement = container.querySelector('.hours');
+                    const minutesElement = container.querySelector('.minutes');
+                    const secondsElement = container.querySelector('.seconds');
+                    
+                    if (daysElement) daysElement.textContent = days;
+                    if (hoursElement) hoursElement.textContent = hours;
+                    if (minutesElement) minutesElement.textContent = minutes;
+                    if (secondsElement) secondsElement.textContent = seconds;
+                    
+                    // Add ending-soon class if less than 6 hours left
+                    if (timeLeft < (1000 * 60 * 60 * 6)) {
+                        container.classList.add('ending-soon');
+                    }
+                });
+            }
+            
+            // Initial update
+            updateCountdowns();
+            
+            // Update every second
+            setInterval(updateCountdowns, 1000);
+            
+            // Watchlist button toggle
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.watchlist-btn')) {
+                    const button = e.target.closest('.watchlist-btn');
+                    button.classList.toggle('active');
+                    
+                    // Show toast notification
+                    const action = button.classList.contains('active') ? 'added to' : 'removed from';
+                    let itemName = '';
+                    
+                    if (button.closest('.card-body')) {
+                        itemName = button.closest('.card-body').querySelector('.card-title').textContent;
+                    } else {
+                        itemName = document.querySelector('#auctionDetailsModalLabel').textContent;
+                    }
+                    
+                    showToast(`${itemName} ${action} your watchlist`);
+                }
+            });
+            
+            // Filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    filterAuctions(category);
+                });
+            });
+            
+            // Filter auctions by category
+            function filterAuctions(category) {
+                const auctionItems = document.querySelectorAll('.auction-item');
+                
+                auctionItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                searchAuctions(searchTerm);
+            });
+            
+            // Search auctions
+            function searchAuctions(searchTerm) {
+                const auctionItems = document.querySelectorAll('.auction-item');
+                
+                auctionItems.forEach(item => {
+                    const title = item.querySelector('.card-title').textContent.toLowerCase();
+                    const description = item.querySelector('.card-text').textContent.toLowerCase();
+                    const category = item.getAttribute('data-category').toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Bid form submission
+            document.addEventListener('submit', function(e) {
+                if (e.target.classList.contains('auction-details-bid-form')) {
+                    e.preventDefault();
+                    
+                    const bidInput = e.target.querySelector('.auction-details-bid-input');
+                    const bidAmount = parseFloat(bidInput.value);
+                    const minBid = parseFloat(bidInput.getAttribute('min'));
+                    
+                    if (isNaN(bidAmount) || bidAmount < minBid) {
+                        showToast('Please enter a valid bid amount', 'error');
+                        return;
+                    }
+                    
+                    // Simulate successful bid
+                    const currentBidElement = e.target.closest('.auction-details-bid-section').querySelector('.current-bid');
+                    currentBidElement.textContent = `$${bidAmount.toFixed(2)}`;
+                    currentBidElement.classList.add('bid-animation');
+                    
+                    setTimeout(() => {
+                        currentBidElement.classList.remove('bid-animation');
+                    }, 1000);
+                    
+                    showToast('Your bid has been placed successfully!', 'success');
+                    
+                    // Reset form
+                    bidInput.value = '';
+                }
+            });
+            
+            // Bid increment values
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('bid-increment-value')) {
+                    const bidInput = e.target.closest('.auction-details-bid-section').querySelector('.auction-details-bid-input');
+                    const currentBid = parseFloat(e.target.closest('.auction-details-bid-section').querySelector('.current-bid').textContent.replace('$', '').replace(',', ''));
+                    const increment = parseFloat(e.target.textContent.replace('$', ''));
+                    
+                    bidInput.value = (currentBid + increment).toFixed(2);
+                }
+            });
+            
+            // Bid Now button click
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('bid-now-btn')) {
+                    const auctionId = parseInt(e.target.getAttribute('data-id'));
+                    const auction = auctions.find(a => a.id === auctionId);
+                    
+                    if (auction) {
+                        // Update modal title
+                        document.getElementById('auctionDetailsModalLabel').textContent = auction.title;
+                        
+                        // Update modal content
+                        document.getElementById('auctionDetailsContent').innerHTML = createAuctionDetailsContent(auction);
+                        
+                        // Show modal
+                        const modal = new bootstrap.Modal(document.getElementById('auctionDetailsModal'));
+                        modal.show();
+                        
+                        // Update countdown in modal
+                        updateCountdowns();
+                    }
+                }
+            });
+            
+            // Toast notification function
+            function showToast(message, type = 'info') {
+                const toastContainer = document.querySelector('.toast-container');
+                
+                const toast = document.createElement('div');
+                toast.className = 'custom-toast';
+                
+                let icon = 'info-circle';
+                if (type === 'success') icon = 'check-circle';
+                if (type === 'error') icon = 'exclamation-circle';
+                
+                toast.innerHTML = `
+                    <div class="custom-toast-header">
+                        <i class="bi bi-${icon} me-2"></i>
+                        <strong>${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
+                        <button class="custom-toast-close">&times;</button>
+                    </div>
+                    <div class="custom-toast-body">
+                        ${message}
+                    </div>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Close button functionality
+                toast.querySelector('.custom-toast-close').addEventListener('click', function() {
+                    toast.remove();
+                });
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Floating chat button
+            const chatButton = document.querySelector('.floating-chat-btn');
+            
+            chatButton.addEventListener('click', function() {
+                showToast('Live chat support is coming soon!');
+            });
+            
+            // Share buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.share-btn')) {
+                    let itemName = '';
+                    
+                    if (e.target.closest('.card-body')) {
+                        itemName = e.target.closest('.card-body').querySelector('.card-title').textContent;
+                    } else {
+                        itemName = document.querySelector('#auctionDetailsModalLabel').textContent;
+                    }
+                    
+                    showToast(`Share link for "${itemName}" copied to clipboard`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
