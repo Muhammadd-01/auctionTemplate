@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Auctions - Premium Auctions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        :root {
+            --color-primary: #991b1b;
+            --color-secondary: #3b82f6;
+            --color-light: #ffffff;
+            --color-dark: #1a1a1a;
+            --color-gray: #f8f9fa;
+            --color-gray-dark: #e9ecef;
+            --color-success: #198754;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            --color-antique: #8b4513;
+            --color-vintage: #6d4c41;
+            --color-designer: #9c27b0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--color-dark);
+            background-color: var(--color-light);
+        }
+        
+        .bg-primary {
+            background-color: var(--color-primary) !important;
+        }
+        
+        .text-primary {
+            color: var(--color-primary) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #7a1616;
+            border-color: #7a1616;
+        }
+        
+        .btn-outline-primary {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--color-primary);
+            color: var(--color-light);
+        }
+        
+        .furniture-banner {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(rgba(153, 27, 27, 0.8), rgba(153, 27, 27, 0.9)), url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--color-light);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .furniture-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+        
+        .floating-furniture {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .floating-item {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            animation: float 15s infinite linear;
+            opacity: 0.6;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(400px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: -30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(153, 27, 27, 0.1);
+        }
+        
+        .filter-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(153, 27, 27, 0.1);
+        }
+        
+        .filter-btn {
+            border: 1px solid #e9ecef;
+            background-color: white;
+            color: var(--color-dark);
+            padding: 10px 18px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+            box-shadow: 0 5px 15px rgba(153, 27, 27, 0.2);
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .item-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(153, 27, 27, 0.1);
+            color: var(--color-primary);
+            min-width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 6px;
+            padding: 0 6px;
+            float: right;
+        }
+        
+        .filter-btn.active .item-count {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .sort-select-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .sort-select {
+            border-radius: 30px;
+            padding: 10px 18px;
+            border: 1px solid #e9ecef;
+            background-color: white;
+            color: var(--color-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            width: 100%;
+        }
+        
+        .sort-select:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 5px 15px rgba(153, 27, 27, 0.1);
+            outline: none;
+        }
+        
+        .sort-select-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-primary);
+            pointer-events: none;
+        }
+        
+        .search-form {
+            position: relative;
+        }
+        
+        .search-input {
+            border-radius: 30px;
+            padding: 15px 20px;
+            padding-right: 50px;
+            border: 1px solid #e9ecef;
+            background-color: white;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .search-input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 5px 15px rgba(153, 27, 27, 0.1);
+            outline: none;
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background-color: #7a1616;
+        }
+        
+        /* Modern Card Design */
+        .furniture-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            background-color: white;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .furniture-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .furniture-card:hover .card-img-overlay {
+            opacity: 1;
+        }
+        
+        .furniture-card:hover .furniture-img {
+            transform: scale(1.1);
+        }
+        
+        .furniture-card:hover .room-preview {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .furniture-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+        
+        .furniture-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .card-img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+        
+        .furniture-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-radius: 20px;
+            z-index: 2;
+        }
+        
+        .furniture-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 20px;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .furniture-badge.antique {
+            background-color: var(--color-antique);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .furniture-badge.vintage {
+            background-color: var(--color-vintage);
+            color: white;
+        }
+        
+        .furniture-badge.designer {
+            background-color: var(--color-designer);
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .furniture-timer {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 10px 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+        
+        .furniture-timer.ending-soon {
+            background-color: var(--color-danger);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .countdown-container {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 5px;
+            border-radius: 5px;
+            min-width: 40px;
+        }
+        
+        .countdown-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        
+        .bid-count {
+            display: inline-block;
+            background-color: rgba(153, 27, 27, 0.1);
+            color: var(--color-primary);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .current-bid {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+        
+        .brand-name {
+            color: #6c757d;
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .furniture-details {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .furniture-year {
+            display: inline-block;
+            background-color: #f8f9fa;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+        
+        .furniture-specs {
+            display: inline-block;
+            font-size: 0.8rem;
+        }
+        
+        .watchlist-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .watchlist-btn:hover, .watchlist-btn.active {
+            color: var(--color-warning);
+        }
+        
+        .watchlist-btn.active i::before {
+            content: "\F586";
+        }
+        
+        .share-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .share-btn:hover {
+            color: var(--color-primary);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background-color: var(--color-danger);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-dropdown {
+            width: 300px;
+            padding: 0;
+        }
+        
+        .notification-header {
+            padding: 10px 15px;
+            background-color: var(--color-primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .notification-body {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notification-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .notification-item-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .notification-footer {
+            padding: 10px 15px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .notification-footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .notification-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 50px 0;
+            color: #6c757d;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+        
+        .item-details-modal .modal-header {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        .item-details-modal .modal-body {
+            padding: 20px;
+        }
+        
+        .item-details-img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .item-details-info {
+            margin-bottom: 20px;
+        }
+        
+        .item-details-info h5 {
+            margin-bottom: 10px;
+        }
+        
+        .item-details-info p {
+            margin-bottom: 5px;
+        }
+        
+        .item-details-description {
+            margin-bottom: 20px;
+        }
+        
+        .item-details-bid-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .item-details-bid-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .item-details-bid-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        
+        .item-details-bid-btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .item-details-bid-btn:hover {
+            background-color: #7a1616;
+        }
+        
+        .item-details-bid-history {
+            margin-top: 20px;
+        }
+        
+        .item-details-bid-history h5 {
+            margin-bottom: 10px;
+        }
+        
+        .item-details-bid-history-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .item-details-bid-history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-details-bid-history-amount {
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .item-details-bid-history-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-left: 10px;
+        }
+        
+        .bidder-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .recent-bidders {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .recent-bidders img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-left: -10px;
+        }
+        
+        .recent-bidders img:first-child {
+            margin-left: 0;
+        }
+        
+        .item-condition {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+        
+        .condition-new {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: var(--color-success);
+        }
+        
+        .condition-like-new {
+            background-color: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+        }
+        
+        .condition-good {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--color-warning);
+        }
+        
+        .condition-fair {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--color-danger);
+        }
+        
+        .item-ribbon {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            z-index: 1;
+        }
+        
+        .item-ribbon-content {
+            position: absolute;
+            display: block;
+            width: 225px;
+            padding: 15px 0;
+            background-color: var(--color-primary);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            left: -25px;
+            top: 30px;
+            transform: rotate(45deg);
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+        }
+        
+        /* Material Icons */
+        .material-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .material-icon {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .material-icon i {
+            margin-right: 5px;
+            color: var(--color-primary);
+        }
+        
+        /* 3D View Button */
+        .view-360-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .view-360-btn:hover {
+            background-color: var(--color-primary);
+            transform: scale(1.1);
+        }
+        
+        /* Room Preview */
+        .room-preview {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .room-preview-content {
+            text-align: center;
+        }
+        
+        .room-preview-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .room-preview-content p {
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        
+        .room-preview-btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .room-preview-btn:hover {
+            background-color: #7a1616;
+            transform: scale(1.05);
+        }
+        
+        /* Furniture Card Inner */
+        .furniture-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .furniture-card:hover .furniture-card-inner {
+            transform: rotateY(0deg);
+        }
+        
+        .furniture-card-front, .furniture-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        
+        .furniture-card-front {
+            background-color: white;
+            color: var(--color-dark);
+        }
+        
+        .furniture-card-back {
+            background-color: var(--color-primary);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        /* Dimensions Visualization */
+        .dimensions-visualization {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .dimensions-visualization h5 {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .dimension-box {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            background-color: rgba(153, 27, 27, 0.1);
+            border: 2px dashed var(--color-primary);
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .dimension-width, .dimension-depth, .dimension-height {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        
+        .dimension-width {
+            top: 5px;
+            left: 0;
+            right: 0;
+            justify-content: center;
+        }
+        
+        .dimension-depth {
+            bottom: 5px;
+            left: 0;
+            right: 0;
+            justify-content: center;
+        }
+        
+        .dimension-height {
+            top: 0;
+            bottom: 0;
+            right: 5px;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .dimension-line {
+            position: relative;
+            height: 2px;
+            background-color: var(--color-primary);
+            width: 80%;
+            margin: 0 10px;
+        }
+        
+        .dimension-label {
+            margin-left: 5px;
+        }
+        
+        /* End dimensions visualization */
+        
+        /* Footer Styles */
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        footer h5 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        footer li {
+            margin-bottom: 0.75rem;
+        }
+        
+        footer a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: white;
+        }
+        
+        footer hr {
+            border-color: #495057;
+        }
+        
+        footer .text-muted {
+            color: #adb5bd !important;
+        }
+        
+        /* Payment Icons */
+        footer img {
+            width: 40px;
+            height: 25px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Premium Auctions</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Auctions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <div class="dropdown">
+                            <a class="nav-link position-relative" href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell"></i>
+                                <span class="notification-badge">3</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown">
+                                <div class="notification-header">
+                                    Notifications
+                                </div>
+                                <div class="notification-body">
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">You've been outbid on "Mid-Century Modern Sofa"</div>
+                                        <div class="notification-item-time">2 minutes ago</div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">New auction: "Antique Victorian Dining Set"</div>
+                                        <div class="notification-item-time">15 minutes ago</div>
+                                    </div>
+                                    <div class="notification-item">
+                                        <div class="notification-item-title">Your bid on "Designer Leather Armchair" is winning!</div>
+                                        <div class="notification-item-time">1 hour ago</div>
+                                    </div>
+                                </div>
+                                <div class="notification-footer">
+                                    <a href="#">View all notifications</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-light" href="#">
+                            <i class="bi bi-person"></i> Account
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Furniture Banner -->
+    <section class="furniture-banner">
+        <div class="floating-furniture">
+            <div class="floating-item" style="left: 10%; animation-duration: 12s; animation-delay: 0s;"></div>
+            <div class="floating-item" style="left: 20%; animation-duration: 15s; animation-delay: 2s;"></div>
+            <div class="floating-item" style="left: 30%; animation-duration: 18s; animation-delay: 1s;"></div>
+            <div class="floating-item" style="left: 40%; animation-duration: 10s; animation-delay: 4s;"></div>
+            <div class="floating-item" style="left: 50%; animation-duration: 14s; animation-delay: 0s;"></div>
+            <div class="floating-item" style="left: 60%; animation-duration: 16s; animation-delay: 3s;"></div>
+            <div class="floating-item" style="left: 70%; animation-duration: 13s; animation-delay: 2s;"></div>
+            <div class="floating-item" style="left: 80%; animation-duration: 17s; animation-delay: 1s;"></div>
+            <div class="floating-item" style="left: 90%; animation-duration: 11s; animation-delay: 5s;"></div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center animate__animated animate__fadeIn">
+                    <h1 class="display-4 fw-bold mb-4">Furniture Auctions</h1>
+                    <p class="lead mb-4">Discover premium furniture, rare antiques, and designer pieces from around the world.</p>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <span class="me-3"><i class="bi bi-chair me-2"></i> 350+ premium furniture pieces</span>
+                        <span class="mx-3">•</span>
+                        <span><i class="bi bi-people-fill me-2"></i> 215 active bidders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Bar Section -->
+    <section>
+        <div class="container">
+            <div class="search-container">
+                <form class="search-form">
+                    <input type="text" class="form-control search-input" placeholder="Search for furniture, brands, or categories..." id="searchInput">
+                    <button type="button" class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter and Sort Section -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row">
+                <!-- Category Filters - Left Side -->
+                <div class="col-md-3">
+                    <div class="filter-container">
+                        <div class="section-title">
+                            <i class="bi bi-filter"></i> Filter by Category
+                        </div>
+                        <button class="filter-btn active" data-category="all">
+                            <i class="bi bi-collection me-2"></i>
+                            All Furniture <span class="item-count" id="allCount">0</span>
+                        </button>
+                        <button class="filter-btn" data-category="Sofas">
+                            <i class="bi bi-house me-2"></i>
+                            Sofas & Seating <span class="item-count" id="sofasCount">0</span>
+                        </button>
+                        <button class="filter-btn" data-category="Tables">
+                            <i class="bi bi-grid-3x3 me-2"></i>
+                            Tables <span class="item-count" id="tablesCount">0</span>
+                        </button>
+                        <button class="filter-btn" data-category="Bedroom">
+                            <i class="bi bi-lamp me-2"></i>
+                            Bedroom <span class="item-count" id="bedroomCount">0</span>
+                        </button>
+                        <button class="filter-btn" data-category="Storage">
+                            <i class="bi bi-archive me-2"></i>
+                            Storage <span class="item-count" id="storageCount">0</span>
+                        </button>
+                        <button class="filter-btn" data-category="Decor">
+                            <i class="bi bi-palette me-2"></i>
+                            Decor <span class="item-count" id="decorCount">0</span>
+                        </button>
+                    </div>
+                    
+                    <div class="filter-container mt-4">
+                        <div class="section-title">
+                            <i class="bi bi-tag"></i> Filter by Style
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" value="Modern" id="styleModern" checked>
+                            <label class="form-check-label" for="styleModern">
+                                Modern
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" value="Antique" id="styleAntique" checked>
+                            <label class="form-check-label" for="styleAntique">
+                                Antique
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" value="Vintage" id="styleVintage" checked>
+                            <label class="form-check-label" for="styleVintage">
+                                Vintage
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Designer" id="styleDesigner" checked>
+                            <label class="form-check-label" for="styleDesigner">
+                                Designer
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-container mt-4">
+                        <div class="section-title">
+                            <i class="bi bi-currency-dollar"></i> Price Range
+                        </div>
+                        <div class="mb-3">
+                            <label for="minPrice" class="form-label small">Min Price ($)</label>
+                            <input type="number" class="form-control" id="minPrice" placeholder="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="maxPrice" class="form-label small">Max Price ($)</label>
+                            <input type="number" class="form-control" id="maxPrice" placeholder="10000">
+                        </div>
+                        <button class="btn btn-primary w-100" id="applyPriceFilter">Apply</button>
+                    </div>
+                </div>
+                
+                <!-- Furniture Listings - Right Side with Sorting at Top -->
+                <div class="col-md-9">
+                    <div class="filter-container mb-4">
+                        <div class="section-title">
+                            <i class="bi bi-sort-down"></i> Sort By
+                        </div>
+                        <div class="sort-select-wrapper">
+                            <select class="form-select sort-select" id="sortSelect">
+                                <option value="default">All</option>
+                                <option value="ending-soon">Ending Soon</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="most-bids">Most Bids</option>
+                                <option value="newest">Newest Listings</option>
+                            </select>
+                            <i class="bi bi-chevron-down sort-select-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Furniture Listings -->
+                    <div class="row" id="furnitureListingsContainer">
+                        <!-- Furniture will be dynamically generated here -->
+                    </div>
+
+                    <!-- No Results Message -->
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <i class="bi bi-search"></i>
+                        <h3>No Furniture Found</h3>
+                        <p class="text-muted">Try adjusting your filters or search criteria</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Item Details Modal -->
+    <div class="modal fade" id="itemDetailsModal" tabindex="-1" aria-labelledby="itemDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content item-details-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemDetailsModalLabel">Item Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="itemDetailsContent">
+                    <!-- Modal content will be dynamically generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Premium Auctions</h5>
+                    <p class="text-muted">Your trusted destination for premium furniture. We connect furniture enthusiasts and collectors in a secure and transparent auction environment.</p>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Auctions</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5 class="mb-3">Categories</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Sofas & Seating</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Tables</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Bedroom</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Storage</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Decor</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="mb-3">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 text-muted"><i class="bi bi-geo-alt me-2"></i>123 Auction Avenue, NY 10001</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-telephone me-2"></i>+1 (555) 123-4567</li>
+                        <li class="mb-2 text-muted"><i class="bi bi-envelope me-2"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="80e9eee6efc0f0f2e5ede9f5ede1f5e3f4e9efeef3aee3efed">[email&#160;protected]</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-muted mb-0">&copy; 2023 Premium Auctions. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-inline-flex">
+                        <img src="https://via.placeholder.com/40x25" alt="Visa" class="me-2">
+                        <img src="https://via.placeholder.com/40x25" alt="Mastercard" class="me-2">
+                        <img src="https://via.placeholder.com/40x25" alt="American Express" class="me-2">
+                        <img src="https://via.placeholder.com/40x25" alt="PayPal">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Furniture Auction Page JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init();
+            
+            // Furniture data
+            const furniture = [
+                {
+                    id: 1,
+                    title: "Mid-Century Modern Sofa",
+                    brand: "Herman Miller",
+                    description: "Iconic mid-century modern sofa with walnut frame and premium wool upholstery.",
+                    category: "Sofas",
+                    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 2450.00,
+                    bidCount: 18,
+                    endTime: "2023-12-31T23:59:59",
+                    badge: "designer",
+                    condition: "Like New",
+                    year: "1960",
+                    specs: "Walnut Frame, Wool Upholstery, 84\" Width",
+                    details: "This authentic Herman Miller sofa is a stunning example of mid-century modern design. Features a solid walnut frame with spindle back and premium wool upholstery in a rich olive green. Recently professionally reupholstered and the wood has been carefully restored to preserve its original character.",
+                    bidders: [
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 2450.00, time: "2h ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 2400.00, time: "3h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 2350.00, time: "5h ago" }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Antique Victorian Dining Table",
+                    brand: "19th Century English",
+                    description: "Solid mahogany extending dining table with intricate carved details, circa 1880.",
+                    category: "Tables",
+                    image: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 3850.00,
+                    bidCount: 24,
+                    endTime: "2023-12-29T20:00:00",
+                    badge: "antique",
+                    condition: "Good",
+                    year: "1880",
+                    specs: "Mahogany, Extends to 10ft, Seats 10-12",
+                    details: "Magnificent Victorian dining table in solid mahogany with intricate carved details on the legs and apron. Features the original extending mechanism with two additional leaves, allowing the table to extend from 6ft to 10ft. The table has been carefully restored while preserving its antique patina and character. Some age-appropriate wear consistent with a piece of this age.",
+                    bidders: [
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 3850.00, time: "1h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 3800.00, time: "3h ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 3750.00, time: "5h ago" }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Eames Lounge Chair and Ottoman",
+                    brand: "Herman Miller",
+                    description: "Authentic Eames lounge chair and ottoman in black leather and rosewood veneer.",
+                    category: "Sofas",
+                    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 4250.00,
+                    bidCount: 32,
+                    endTime: "2023-12-28T18:00:00",
+                    badge: "designer",
+                    condition: "Like New",
+                    year: "1998",
+                    specs: "Black Leather, Rosewood Veneer, Original Label",
+                    details: "Authentic Herman Miller Eames lounge chair and ottoman in excellent condition. Features black premium leather upholstery and rosewood veneer shells. This is a licensed production from 1998 with the original Herman Miller label. The chair has been professionally maintained and shows minimal wear. A true design icon that provides exceptional comfort.",
+                    bidders: [
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 4250.00, time: "15m ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 4200.00, time: "1h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 4150.00, time: "2h ago" }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "French Provincial Armoire",
+                    brand: "19th Century French",
+                    description: "Hand-carved oak armoire with original hardware and dovetail construction.",
+                    category: "Storage",
+                    image: "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 3280.00,
+                    bidCount: 15,
+                    endTime: "2023-12-27T14:30:00",
+                    badge: "antique",
+                    condition: "Good",
+                    year: "1870",
+                    specs: "Solid Oak, Hand-Carved, Original Hardware",
+                    details: "Exquisite French Provincial armoire from the late 19th century. Crafted from solid oak with beautiful hand-carved details and original brass hardware. Features traditional dovetail construction and a warm honey patina that has developed over 150 years. The interior has been fitted with modern hanging rods while preserving the original shelving. Some age-appropriate wear and minor repairs consistent with a piece of this age.",
+                    bidders: [
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 3280.00, time: "30m ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 3250.00, time: "2h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 3200.00, time: "5h ago" }
+                    ]
+                },
+                {
+                    id: 5,
+                    title: "Vintage Teak Credenza",
+                    brand: "Danish Modern",
+                    description: "1960s Danish modern teak credenza with sliding doors and adjustable shelving.",
+                    category: "Storage",
+                    image: "https://images.unsplash.com/photo-1551298370-9d3d53740c72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 1850.00,
+                    bidCount: 27,
+                    endTime: "2023-12-30T16:45:00",
+                    badge: "vintage",
+                    condition: "Good",
+                    year: "1965",
+                    specs: "Teak Veneer, 72\" Width, Tambour Doors",
+                    details: "Beautiful Danish modern teak credenza from the 1960s. Features tambour sliding doors, adjustable interior shelving, and four drawers with dovetail joints. The piece has been carefully restored with Danish oil to bring out the natural beauty of the teak while preserving its vintage character. Perfect for use as a media console, sideboard, or office storage.",
+                    bidders: [
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 1850.00, time: "1h ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 1800.00, time: "3h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 1750.00, time: "6h ago" }
+                    ]
+                },
+                {
+                    id: 6,
+                    title: "Knoll Barcelona Chair",
+                    brand: "Knoll",
+                    description: "Authentic Knoll Barcelona chair in black leather with stainless steel frame.",
+                    category: "Sofas",
+                    image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 3750.00,
+                    bidCount: 14,
+                    endTime: "2023-12-25T12:00:00",
+                    badge: "designer",
+                    condition: "Like New",
+                    year: "2010",
+                    specs: "Black Leather, Stainless Steel, Knoll Label",
+                    details: "Authentic Knoll Barcelona chair designed by Ludwig Mies van der Rohe. Features premium black leather upholstery, hand-buffed stainless steel frame, and includes the original Knoll label. This iconic piece is in excellent condition with minimal wear. A timeless design that works in both modern and traditional interiors.",
+                    bidders: [
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 3750.00, time: "5h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 3700.00, time: "8h ago" },
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 3650.00, time: "12h ago" }
+                    ]
+                },
+                {
+                    id: 7,
+                    title: "Art Deco Bedroom Set",
+                    brand: "1930s American",
+                    description: "Complete Art Deco bedroom set in burled walnut with original hardware.",
+                    category: "Bedroom",
+                    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 4950.00,
+                    bidCount: 21,
+                    endTime: "2023-12-29T15:30:00",
+                    badge: "vintage",
+                    condition: "Good",
+                    year: "1935",
+                    specs: "Burled Walnut, 5 Pieces, Original Hardware",
+                    details: "Stunning Art Deco bedroom set from the 1930s in beautiful burled walnut with geometric details and original brass hardware. The set includes a queen-size bed (converted from full), tall chest of drawers, vanity with mirror, nightstand, and bench. All pieces have been professionally restored while preserving the original finish and character. A rare opportunity to acquire a complete matching set from this desirable period.",
+                    bidders: [
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 4950.00, time: "2h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 4900.00, time: "4h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 4850.00, time: "7h ago" }
+                    ]
+                },
+                {
+                    id: 8,
+                    title: "Antique Persian Rug",
+                    brand: "Tabriz",
+                    description: "Hand-knotted Persian Tabriz rug with traditional floral motifs, circa 1920.",
+                    category: "Decor",
+                    image: "https://images.unsplash.com/photo-1600166898405-da9535204843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 5200.00,
+                    bidCount: 16,
+                    endTime: "2023-12-24T10:00:00",
+                    badge: "antique",
+                    condition: "Good",
+                    year: "1920",
+                    specs: "Wool, 9'x12', Hand-Knotted",
+                    details: "Exquisite hand-knotted Persian Tabriz rug from the early 20th century. Features a traditional medallion design with intricate floral motifs in rich blues, reds, and creams. The rug measures approximately 9'x12' and is crafted from high-quality wool with natural dyes. It has been professionally cleaned and shows beautiful patina and character consistent with its age. Some minor wear in high-traffic areas, but overall excellent condition for a rug of this age.",
+                    bidders: [
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 5200.00, time: "1d ago" },
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 5150.00, time: "2d ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 5100.00, time: "3d ago" }
+                    ]
+                },
+                {
+                    id: 9,
+                    title: "Tiffany Style Table Lamp",
+                    brand: "Reproduction",
+                    description: "Handcrafted stained glass table lamp in the Tiffany style with bronze base.",
+                    category: "Decor",
+                    image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 480.00,
+                    bidCount: 19,
+                    endTime: "2023-12-26T14:15:00",
+                    badge: "vintage",
+                    condition: "Like New",
+                    year: "1990",
+                    specs: "Stained Glass, Bronze Base, 24\" Height",
+                    details: "Beautiful handcrafted stained glass table lamp in the Tiffany style. Features a colorful dragonfly design with vibrant blues, greens, and ambers. The shade is paired with a decorative bronze-finished base. The lamp stands 24 inches tall and uses a standard medium base bulb (not included). In excellent condition with no cracks or damage to the glass.",
+                    bidders: [
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 480.00, time: "6h ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 460.00, time: "12h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 440.00, time: "1d ago" }
+                    ]
+                },
+                {
+                    id: 10,
+                    title: "Scandinavian Dining Set",
+                    brand: "Danish Modern",
+                    description: "Teak dining table with six matching chairs in classic Scandinavian design.",
+                    category: "Tables",
+                    image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 2450.00,
+                    bidCount: 23,
+                    endTime: "2023-12-28T11:30:00",
+                    badge: "vintage",
+                    condition: "Good",
+                    year: "1960",
+                    specs: "Teak, Table + 6 Chairs, Extends to 86\"",
+                    details: "Classic Scandinavian dining set from the 1960s featuring a teak dining table and six matching chairs. The table has two extension leaves that allow it to expand from 63\" to 86\", comfortably seating 8-10 people. The chairs have been newly reupholstered in a durable charcoal gray fabric that complements the warm teak wood. The entire set has been refinished with Danish oil to protect the wood while maintaining its natural beauty.",
+                    bidders: [
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 2450.00, time: "3h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 2400.00, time: "5h ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 2350.00, time: "8h ago" }
+                    ]
+                },
+                {
+                    id: 11,
+                    title: "Vintage Chesterfield Sofa",
+                    brand: "English",
+                    description: "Classic button-tufted Chesterfield sofa in aged brown leather with rolled arms.",
+                    category: "Sofas",
+                    image: "https://images.unsplash.com/photo-1549187774-b4e9b0445b41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 3050.00,
+                    bidCount: 17,
+                    endTime: "2023-12-23T09:45:00",
+                    badge: "vintage",
+                    condition: "Good",
+                    year: "1980",
+                    specs: "Brown Leather, Button-Tufted, 84\" Width",
+                    details: "Classic English Chesterfield sofa in rich brown leather with the characteristic deep button tufting, rolled arms, and nailhead trim. The leather has developed a beautiful patina over time, giving it that desirable lived-in look. The sofa features a solid hardwood frame and traditional coil spring construction for excellent support and durability. Recently professionally reconditioned with new padding and minor leather repairs.",
+                    bidders: [
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 3050.00, time: "1d ago" },
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 3000.00, time: "2d ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 2950.00, time: "3d ago" }
+                    ]
+                },
+                {
+                    id: 12,
+                    title: "Antique French Armoire",
+                    brand: "Louis XV Style",
+                    description: "19th century French armoire with hand-carved details and mirrored doors.",
+                    category: "Storage",
+                    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 4650.00,
+                    bidCount: 12,
+                    endTime: "2023-12-27T13:00:00",
+                    badge: "antique",
+                    condition: "Good",
+                    year: "1870",
+                    specs: "Walnut, Mirrored Doors, Hand-Carved",
+                    details: "Exquisite 19th century French armoire in the Louis XV style. Crafted from solid walnut with beautiful hand-carved floral and scroll details. Features two mirrored doors that open to reveal ample storage space with shelving and hanging rod. The piece stands on cabriole legs and has been carefully restored to preserve its antique character while ensuring structural integrity. A truly magnificent statement piece with wonderful provenance.",
+                    bidders: [
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 4650.00, time: "4h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 4600.00, time: "8h ago" },
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 4550.00, time: "12h ago" }
+                    ]
+                },
+                {
+                    id: 13,
+                    title: "Noguchi Coffee Table",
+                    brand: "Herman Miller",
+                    description: "Authentic Noguchi coffee table with glass top and sculptural wooden base.",
+                    category: "Tables",
+                    image: "https://images.unsplash.com/photo-1532372320572-cda25653a694?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 1850.00,
+                    bidCount: 9,
+                    endTime: "2023-12-25T16:30:00",
+                    badge: "designer",
+                    condition: "Like New",
+                    year: "2015",
+                    specs: "Glass Top, Walnut Base, Herman Miller Label",
+                    details: "Authentic Herman Miller Noguchi coffee table designed by Isamu Noguchi. Features a 3/4\" thick glass top with characteristic asymmetrical shape and sculptural wooden base in walnut finish. Includes the original Herman Miller label. This iconic mid-century modern design is in excellent condition with no chips, scratches, or damage. A timeless piece that works beautifully in any contemporary interior.",
+                    bidders: [
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 1850.00, time: "1d ago" },
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 1800.00, time: "2d ago" },
+                        { name: "John D.", image: "https://randomuser.me/api/portraits/men/32.jpg", bid: 1750.00, time: "3d ago" }
+                    ]
+                },
+                {
+                    id: 14,
+                    title: "Vintage Moroccan Rug",
+                    brand: "Beni Ourain",
+                    description: "Authentic Beni Ourain rug with traditional geometric pattern in wool.",
+                    category: "Decor",
+                    image: "https://images.unsplash.com/photo-1551656941-dc4f9c64d2d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 1750.00,
+                    bidCount: 14,
+                    endTime: "2023-12-26T10:15:00",
+                    badge: "vintage",
+                    condition: "Good",
+                    year: "1970",
+                    specs: "Wool, 6'x9', Hand-Knotted",
+                    details: "Authentic vintage Moroccan Beni Ourain rug featuring the traditional geometric diamond pattern in natural undyed wool. This hand-knotted rug measures approximately 6'x9' and has the characteristic plush, deep pile that these rugs are known for. The rug has been professionally cleaned and is in excellent vintage condition with minimal wear. These rugs have become highly sought after for their ability to complement both modern and traditional interiors.",
+                    bidders: [
+                        { name: "Sarah M.", image: "https://randomuser.me/api/portraits/women/44.jpg", bid: 1750.00, time: "5h ago" },
+                        { name: "Robert T.", image: "https://randomuser.me/api/portraits/men/67.jpg", bid: 1700.00, time: "9h ago" },
+                        { name: "Emily R.", image: "https://randomuser.me/api/portraits/women/28.jpg", bid: 1650.00, time: "14h ago" }
+                    ]
+                },
+                {
+                    id: 15,
+                    title: "Antique Brass Bed Frame",
+                    brand: "Victorian",
+                    description: "19th century Victorian brass bed frame with ornate detailing, queen size.",
+                    category: "Bedroom",
+                    image: "https://images.unsplash.com/photo-1505693314120-0d443867891c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+                    currentBid: 2320.00,
+                    bidCount: 22,
+                    endTime: "2023-12-24T14:00:00",
+                    badge: "antique",
+                    condition: "Good",
+                    year: "1890",
+                    specs: "Solid Brass, Queen Size, Ornate Finials",
+                    details: "Stunning Victorian brass bed frame from the late 19th century. Features ornate finials, decorative castings, and a beautiful patina that has developed over time. The bed has been professionally restored and converted to accommodate a modern queen-size mattress while preserving its antique character. Includes all hardware and slats. Some minor wear consistent with age, but overall excellent condition for a piece that's over 130 years old.",
+                    bidders: [
+                        { name: "Jennifer L.", image: "https://randomuser.me/api/portraits/women/63.jpg", bid: 2320.00, time: "2d ago" },
+                        { name: "Michael J.", image: "https://randomuser.me/api/portraits/men/41.jpg", bid: 2300.00, time: "3d ago" },
+                        { name: "Thomas W.", image: "https://randomuser.me/api/portraits/men/22.jpg", bid: 2250.00, time: "4d ago" }
+                    ]
+                }
+            ];
+
+            // Function to create furniture card HTML
+            function createFurnitureCard(item) {
+                let badgeHTML = '';
+                if (item.badge === 'antique') {
+                    badgeHTML = `<div class="furniture-badge antique"><i class="bi bi-gem"></i> Antique</div>`;
+                } else if (item.badge === 'vintage') {
+                    badgeHTML = `<div class="furniture-badge vintage"><i class="bi bi-hourglass"></i> Vintage</div>`;
+                } else if (item.badge === 'designer') {
+                    badgeHTML = `<div class="furniture-badge designer"><i class="bi bi-award"></i> Designer</div>`;
+                }
+
+                let conditionClass = '';
+                if (item.condition === 'New') {
+                    conditionClass = 'condition-new';
+                } else if (item.condition === 'Like New') {
+                    conditionClass = 'condition-like-new';
+                } else if (item.condition === 'Good') {
+                    conditionClass = 'condition-good';
+                } else {
+                    conditionClass = 'condition-fair';
+                }
+
+                let ribbonHTML = '';
+                if (item.currentBid > 4000) {
+                    ribbonHTML = `
+                        <div class="item-ribbon">
+                            <span class="item-ribbon-content">Premium</span>
+                        </div>
+                    `;
+                }
+
+                // Create material icons based on category
+                let materialIconsHTML = '';
+                if (item.category === 'Sofas') {
+                    materialIconsHTML = `
+                        <div class="material-icons">
+                            <span class="material-icon"><i class="bi bi-tree"></i> ${item.specs.split(',')[0]}</span>
+                            <span class="material-icon"><i class="bi bi-palette2"></i> ${item.specs.split(',')[1]}</span>
+                        </div>
+                    `;
+                } else if (item.category === 'Tables') {
+                    materialIconsHTML = `
+                        <div class="material-icons">
+                            <span class="material-icon"><i class="bi bi-tree"></i> ${item.specs.split(',')[0]}</span>
+                            <span class="material-icon"><i class="bi bi-rulers"></i> ${item.specs.split(',')[2]}</span>
+                        </div>
+                    `;
+                } else if (item.category === 'Storage') {
+                    materialIconsHTML = `
+                        <div class="material-icons">
+                            <span class="material-icon"><i class="bi bi-tree"></i> ${item.specs.split(',')[0]}</span>
+                            <span class="material-icon"><i class="bi bi-tools"></i> ${item.specs.split(',')[2]}</span>
+                        </div>
+                    `;
+                } else if (item.category === 'Decor') {
+                    materialIconsHTML = `
+                        <div class="material-icons">
+                            <span class="material-icon"><i class="bi bi-palette2"></i> ${item.specs.split(',')[0]}</span>
+                            <span class="material-icon"><i class="bi bi-rulers"></i> ${item.specs.split(',')[1]}</span>
+                        </div>
+                    `;
+                } else if (item.category === 'Bedroom') {
+                    materialIconsHTML = `
+                        <div class="material-icons">
+                            <span class="material-icon"><i class="bi bi-tree"></i> ${item.specs.split(',')[0]}</span>
+                            <span class="material-icon"><i class="bi bi-rulers"></i> ${item.specs.split(',')[1]}</span>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="col-lg-4 col-md-6 mb-4 item-card fade-in" data-id="${item.id}" data-category="${item.category}" data-price="${item.currentBid}" data-bids="${item.bidCount}" data-end="${item.endTime}" data-condition="${item.condition}" data-aos="fade-up" data-aos-delay="${(item.id % 3) * 100}">
+                        <div class="furniture-card">
+                            <div class="furniture-img-container">
+                                <img src="${item.image}" alt="${item.title}" class="furniture-img">
+                                <div class="card-img-overlay">
+                                    <div class="material-icons">
+                                        <span class="material-icon"><i class="bi bi-calendar"></i> ${item.year}</span>
+                                        <span class="item-condition ${conditionClass}">${item.condition}</span>
+                                    </div>
+                                </div>
+                                <div class="furniture-category">${item.category}</div>
+                                ${badgeHTML}
+                                ${ribbonHTML}
+                                <button class="view-360-btn" title="View in 3D">
+                                    <i class="bi bi-badge-3d"></i>
+                                </button>
+                                <div class="room-preview">
+                                    <div class="room-preview-content">
+                                        <h4>See it in your room</h4>
+                                        <p>Use AR to visualize this piece in your space</p>
+                                        <button class="room-preview-btn">View in Room</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="furniture-timer" data-end="${item.endTime}">
+                                <i class="bi bi-clock"></i>
+                                <div class="countdown-container">
+                                    <div class="countdown-item">
+                                        <span class="countdown-value days">0</span>
+                                        <span class="countdown-label">d</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value hours">0</span>
+                                        <span class="countdown-label">h</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value minutes">0</span>
+                                        <span class="countdown-label">m</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value seconds">0</span>
+                                        <span class="countdown-label">s</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title mb-1">${item.title}</h5>
+                                <span class="brand-name">by ${item.brand}</span>
+                                <p class="card-text text-muted mb-3">${item.description}</p>
+                                ${materialIconsHTML}
+                                <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                    <span class="bid-count"><i class="bi bi-graph-up me-1"></i> ${item.bidCount} bids</span>
+                                    <div class="d-flex align-items-center">
+                                        <button class="watchlist-btn me-2" title="Add to watchlist">
+                                            <i class="bi bi-star"></i>
+                                        </button>
+                                        <button class="share-btn" title="Share">
+                                            <i class="bi bi-share"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <div class="text-muted small">Current Bid</div>
+                                        <div class="current-bid">$${item.currentBid.toLocaleString()}</div>
+                                    </div>
+                                    <button class="btn btn-primary bid-now-btn" data-id="${item.id}">
+                                        Bid Now
+                                    </button>
+                                </div>
+                                <div class="recent-bidders">
+                                    ${item.bidders.map((bidder, index) => 
+                                        `<img src="${bidder.image}" alt="Bidder" title="${bidder.name} - $${bidder.bid.toLocaleString()}">`
+                                    ).join('')}
+                                    <div class="ms-2 text-muted small">+${item.bidCount - item.bidders.length} more</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Function to create item details modal content
+            function createItemDetailsContent(item) {
+                let conditionClass = '';
+                if (item.condition === 'New') {
+                    conditionClass = 'condition-new';
+                } else if (item.condition === 'Like New') {
+                    conditionClass = 'condition-like-new';
+                } else if (item.condition === 'Good') {
+                    conditionClass = 'condition-good';
+                } else {
+                    conditionClass = 'condition-fair';
+                }
+
+                // Create specs list based on category
+                let specsListHTML = '';
+                const specsArray = item.specs.split(',');
+                
+                if (item.category === 'Sofas') {
+                    specsListHTML = `
+                        <p><i class="bi bi-tree me-2 text-primary"></i><strong>Material:</strong> ${specsArray[0]}</p>
+                        <p><i class="bi bi-palette2 me-2 text-primary"></i><strong>Upholstery:</strong> ${specsArray[1]}</p>
+                        <p><i class="bi bi-rulers me-2 text-primary"></i><strong>Dimensions:</strong> ${specsArray[2]}</p>
+                    `;
+                } else if (item.category === 'Tables') {
+                    specsListHTML = `
+                        <p><i class="bi bi-tree me-2 text-primary"></i><strong>Material:</strong> ${specsArray[0]}</p>
+                        <p><i class="bi bi-people me-2 text-primary"></i><strong>Seating:</strong> ${specsArray[1]}</p>
+                        <p><i class="bi bi-rulers me-2 text-primary"></i><strong>Dimensions:</strong> ${specsArray[2]}</p>
+                    `;
+                } else if (item.category === 'Storage') {
+                    specsListHTML = `
+                        <p><i class="bi bi-tree me-2 text-primary"></i><strong>Material:</strong> ${specsArray[0]}</p>
+                        <p><i class="bi bi-door-open me-2 text-primary"></i><strong>Features:</strong> ${specsArray[1]}</p>
+                        <p><i class="bi bi-tools me-2 text-primary"></i><strong>Construction:</strong> ${specsArray[2]}</p>
+                    `;
+                } else if (item.category === 'Decor') {
+                    specsListHTML = `
+                        <p><i class="bi bi-palette2 me-2 text-primary"></i><strong>Material:</strong> ${specsArray[0]}</p>
+                        <p><i class="bi bi-rulers me-2 text-primary"></i><strong>Dimensions:</strong> ${specsArray[1]}</p>
+                        <p><i class="bi bi-tools me-2 text-primary"></i><strong>Construction:</strong> ${specsArray[2]}</p>
+                    `;
+                } else if (item.category === 'Bedroom') {
+                    specsListHTML = `
+                        <p><i class="bi bi-tree me-2 text-primary"></i><strong>Material:</strong> ${specsArray[0]}</p>
+                        <p><i class="bi bi-collection me-2 text-primary"></i><strong>Set Includes:</strong> ${specsArray[1]}</p>
+                        <p><i class="bi bi-tools me-2 text-primary"></i><strong>Features:</strong> ${specsArray[2]}</p>
+                    `;
+                }
+
+                return `
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img src="${item.image}" alt="${item.title}" class="item-details-img">
+                            <div class="d-flex justify-content-between mb-3">
+                                <button class="watchlist-btn" title="Add to watchlist">
+                                    <i class="bi bi-star"></i> Add to Watchlist
+                                </button>
+                                <button class="share-btn" title="Share">
+                                    <i class="bi bi-share"></i> Share
+                                </button>
+                            </div>
+                            <div class="furniture-timer mb-3" data-end="${item.endTime}">
+                                <i class="bi bi-clock"></i>
+                                <div class="countdown-container">
+                                    <div class="countdown-item">
+                                        <span class="countdown-value days">0</span>
+                                        <span class="countdown-label">d</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value hours">0</span>
+                                        <span class="countdown-label">h</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value minutes">0</span>
+                                        <span class="countdown-label">m</span>
+                                    </div>
+                                    <div class="countdown-item">
+                                        <span class="countdown-value seconds">0</span>
+                                        <span class="countdown-label">s</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="dimensions-visualization">
+                                <h5><i class="bi bi-rulers me-2"></i>Dimensions</h5>
+                                <div class="dimension-box">
+                                    <div class="dimension-width">
+                                        <div class="dimension-line"></div>
+                                        Width: ${item.specs.split(',')[2] ? item.specs.split(',')[2].trim() : 'N/A'}
+                                    </div>
+                                    <div class="dimension-depth">
+                                        <div class="dimension-line"></div>
+                                        Depth: 30"
+                                    </div>
+                                    <div class="dimension-height">
+                                        <div class="dimension-line"></div>
+                                        Height: 32"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <h3 class="mb-1">${item.title}</h3>
+                            <p class="brand-name mb-3">by ${item.brand}</p>
+                            
+                            <div class="item-details-info">
+                                <h5>Item Details</h5>
+                                <p><strong>Category:</strong> ${item.category}</p>
+                                <p><strong>Condition:</strong> <span class="item-condition ${conditionClass}">${item.condition}</span></p>
+                                <p><strong>Year:</strong> ${item.year}</p>
+                            </div>
+                            
+                            <div class="item-details-info">
+                                <h5>Specifications</h5>
+                                ${specsListHTML}
+                            </div>
+                            
+                            <div class="item-details-description">
+                                <h5>Description</h5>
+                                <p>${item.details}</p>
+                            </div>
+                            
+                            <div class="item-details-bid-section">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <div class="text-muted small">Current Bid</div>
+                                        <div class="current-bid">$${item.currentBid.toLocaleString()}</div>
+                                    </div>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-graph-up me-1"></i> ${item.bidCount} bids
+                                    </div>
+                                </div>
+                                <form class="item-details-bid-form">
+                                    <input type="number" class="item-details-bid-input" placeholder="Enter your bid (min. $${(item.currentBid + Math.ceil(item.currentBid * 0.05)).toLocaleString()})" min="${item.currentBid + Math.ceil(item.currentBid * 0.05)}" step="10">
+                                    <button type="submit" class="item-details-bid-btn">Place Bid</button>
+                                </form>
+                                <div class="text-muted small mt-2">
+                                    By placing a bid, you agree to our <a href="#">Terms & Conditions</a>
+                                </div>
+                            </div>
+                            
+                            <div class="item-details-bid-history">
+                                <h5>Bid History</h5>
+                                ${item.bidders.map(bidder => `
+                                    <div class="item-details-bid-history-item">
+                                        <img src="${bidder.image}" alt="Bidder" class="bidder-avatar me-2">
+                                        <div>
+                                            <div>${bidder.name}</div>
+                                            ${bidder.bid === item.currentBid ? '<div class="text-muted small">Highest Bidder</div>' : ''}
+                                        </div>
+                                        <div class="item-details-bid-history-amount">$${bidder.bid.toLocaleString()}</div>
+                                        <div class="item-details-bid-history-time">${bidder.time}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Function to render furniture
+            function renderFurniture(itemsList) {
+                const container = document.getElementById('furnitureListingsContainer');
+                container.innerHTML = '';
+                
+                if (itemsList.length === 0) {
+                    document.getElementById('noResults').style.display = 'block';
+                } else {
+                    document.getElementById('noResults').style.display = 'none';
+                    
+                    itemsList.forEach(item => {
+                        container.innerHTML += createFurnitureCard(item);
+                    });
+                }
+                
+                // Initialize fade-in animation
+                initFadeInAnimation();
+                
+                // Initialize countdown timers
+                updateCountdowns();
+                
+                // Update category counts
+                updateCategoryCounts();
+            }
+
+            // Function to update category counts
+            function updateCategoryCounts() {
+                const allCount = furniture.length;
+                const sofasCount = furniture.filter(item => item.category === 'Sofas').length;
+                const tablesCount = furniture.filter(item => item.category === 'Tables').length;
+                const bedroomCount = furniture.filter(item => item.category === 'Bedroom').length;
+                const storageCount = furniture.filter(item => item.category === 'Storage').length;
+                const decorCount = furniture.filter(item => item.category === 'Decor').length;
+                
+                document.getElementById('allCount').textContent = allCount;
+                document.getElementById('sofasCount').textContent = sofasCount;
+                document.getElementById('tablesCount').textContent = tablesCount;
+                document.getElementById('bedroomCount').textContent = bedroomCount;
+                document.getElementById('storageCount').textContent = storageCount;
+                document.getElementById('decorCount').textContent = decorCount;
+            }
+
+            // Initial render
+            renderFurniture(furniture);
+
+            // Filter furniture by category
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    applyFilters();
+                });
+            });
+
+            // Sort furniture
+            const sortSelect = document.getElementById('sortSelect');
+            
+            sortSelect.addEventListener('change', function() {
+                applyFilters();
+            });
+
+            // Search furniture
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', function() {
+                applyFilters();
+            });
+
+            // Price filter
+            document.getElementById('applyPriceFilter').addEventListener('click', function() {
+                applyFilters();
+            });
+
+            // Style filter
+            const styleCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            styleCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    applyFilters();
+                });
+            });
+
+            // Function to apply all filters
+            function applyFilters() {
+                const category = document.querySelector('.filter-btn.active').getAttribute('data-category');
+                const sortValue = document.getElementById('sortSelect').value;
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+                const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+                
+                // Get selected styles
+                const selectedStyles = [];
+                document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                    selectedStyles.push(checkbox.value);
+                });
+                
+                filterAndSortFurniture(category, sortValue, searchTerm, minPrice, maxPrice, selectedStyles);
+            }
+
+            // Function to filter and sort furniture
+            function filterAndSortFurniture(category, sortValue, searchTerm, minPrice, maxPrice, styles) {
+                let filteredItems = [...furniture];
+                
+                // Filter by category
+                if (category !== 'all') {
+                    filteredItems = filteredItems.filter(item => item.category === category);
+                }
+                
+                // Filter by search term
+                if (searchTerm) {
+                    filteredItems = filteredItems.filter(item => 
+                        item.title.toLowerCase().includes(searchTerm) || 
+                        item.brand.toLowerCase().includes(searchTerm) || 
+                        item.description.toLowerCase().includes(searchTerm) ||
+                        item.category.toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                // Filter by price range
+                filteredItems = filteredItems.filter(item => 
+                    item.currentBid >= minPrice && item.currentBid <= maxPrice
+                );
+                
+                // Filter by style
+                if (styles.length > 0) {
+                    filteredItems = filteredItems.filter(item => {
+                        // Map badge types to style names
+                        const itemStyle = item.badge === 'antique' ? 'Antique' : 
+                                         item.badge === 'vintage' ? 'Vintage' : 
+                                         item.badge === 'designer' ? 'Designer' : 'Modern';
+                        return styles.includes(itemStyle);
+                    });
+                }
+                
+                // Sort items
+                switch (sortValue) {
+                    case 'ending-soon':
+                        filteredItems.sort((a, b) => new Date(a.endTime) - new Date(b.endTime));
+                        break;
+                    case 'price-low':
+                        filteredItems.sort((a, b) => a.currentBid - b.currentBid);
+                        break;
+                    case 'price-high':
+                        filteredItems.sort((a, b) => b.currentBid - a.currentBid);
+                        break;
+                    case 'most-bids':
+                        filteredItems.sort((a, b) => b.bidCount - a.bidCount);
+                        break;
+                    case 'newest':
+                        filteredItems.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+                        break;
+                    default:
+                        // Default sorting (newest first)
+                        break;
+                }
+                
+                renderFurniture(filteredItems);
+            }
+
+            // Fade-in animation on scroll
+            function initFadeInAnimation() {
+                const fadeElements = document.querySelectorAll('.fade-in');
+                
+                const fadeInObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const delay = entry.target.getAttribute('data-delay') || 0;
+                            setTimeout(() => {
+                                entry.target.classList.add('active');
+                            }, delay);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                fadeElements.forEach(element => {
+                    fadeInObserver.observe(element);
+                });
+            }
+
+            // Countdown timers
+            function updateCountdowns() {
+                const now = new Date().getTime();
+                const countdownContainers = document.querySelectorAll('.furniture-timer');
+                
+                countdownContainers.forEach(container => {
+                    const endTime = new Date(container.getAttribute('data-end')).getTime();
+                    const timeLeft = endTime - now;
+                    
+                    if (timeLeft <= 0) {
+                        container.innerHTML = '<span class="text-danger">Auction Ended</span>';
+                        return;
+                    }
+                    
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    
+                    const daysElement = container.querySelector('.days');
+                    const hoursElement = container.querySelector('.hours');
+                    const minutesElement = container.querySelector('.minutes');
+                    const secondsElement = container.querySelector('.seconds');
+                    
+                    if (daysElement) daysElement.textContent = days;
+                    if (hoursElement) hoursElement.textContent = hours;
+                    if (minutesElement) minutesElement.textContent = minutes;
+                    if (secondsElement) secondsElement.textContent = seconds;
+                    
+                    // Add ending-soon class if less than 1 day left
+                    if (timeLeft < (1000 * 60 * 60 * 24)) {
+                        container.classList.add('ending-soon');
+                    }
+                });
+            }
+            
+            // Initial update
+            updateCountdowns();
+            
+            // Update every second
+            setInterval(updateCountdowns, 1000);
+
+            // Bid Now button click
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('bid-now-btn')) {
+                    const itemId = parseInt(e.target.getAttribute('data-id'));
+                    const item = furniture.find(i => i.id === itemId);
+                    
+                    if (item) {
+                        // Update modal title
+                        document.getElementById('itemDetailsModalLabel').textContent = item.title;
+                        
+                        // Update modal content
+                        document.getElementById('itemDetailsContent').innerHTML = createItemDetailsContent(item);
+                        
+                        // Show modal
+                        const modal = new bootstrap.Modal(document.getElementById('itemDetailsModal'));
+                        modal.show();
+                        
+                        // Update countdown in modal
+                        updateCountdowns();
+                    }
+                }
+            });
+
+            // Watchlist button toggle
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.watchlist-btn')) {
+                    const button = e.target.closest('.watchlist-btn');
+                    button.classList.toggle('active');
+                    
+                    // Show toast notification (if we had one)
+                    const action = button.classList.contains('active') ? 'added to' : 'removed from';
+                    let itemName = '';
+                    
+                    if (button.closest('.card-body')) {
+                        itemName = button.closest('.card-body').querySelector('.card-title').textContent;
+                    } else {
+                        itemName = document.querySelector('#itemDetailsModalLabel').textContent;
+                    }
+                    
+                    console.log(`${itemName} ${action} your watchlist`);
+                }
+            });
+
+            // Bid form submission
+            document.addEventListener('submit', function(e) {
+                if (e.target.classList.contains('item-details-bid-form')) {
+                    e.preventDefault();
+                    
+                    const bidInput = e.target.querySelector('.item-details-bid-input');
+                    const bidAmount = parseFloat(bidInput.value);
+                    const minBid = parseFloat(bidInput.getAttribute('min'));
+                    
+                    if (isNaN(bidAmount) || bidAmount < minBid) {
+                        alert('Please enter a valid bid amount');
+                        return;
+                    }
+                    
+                    // Simulate successful bid
+                    const currentBidElement = e.target.closest('.item-details-bid-section').querySelector('.current-bid');
+                    currentBidElement.textContent = `$${bidAmount.toLocaleString()}`;
+                    
+                    alert('Your bid has been placed successfully!');
+                    
+                    // Reset form
+                    bidInput.value = '';
+                }
+            });
+
+            // 3D View button click
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.view-360-btn')) {
+                    alert('3D View feature coming soon!');
+                }
+            });
+
+            // Room Preview button click
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.room-preview-btn')) {
+                    alert('AR Room Preview feature coming soon!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
